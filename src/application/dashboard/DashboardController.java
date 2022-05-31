@@ -1881,13 +1881,11 @@ public class DashboardController implements Initializable  {
 	@FXML
     private void logout(ActionEvent event){
 		try {
-			//redirection to another stage
-			URL myURL = new URL(filePath.toString().replace("/dashboard/DashboardScreen.fxml", "/log/LogScreen.fxml"));
+			URL myURL = new URL(filePath.toString().replace("/log/LogScreen.fxml","/dashboard/DashboardScreen.fxml"));
 			Parent root = FXMLLoader.load(myURL);
 			Scene scene = new Scene(root);
 			Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 			stage.setScene(scene);
-			stage.centerOnScreen();
 			stage.show();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
