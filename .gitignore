@@ -7,7 +7,6 @@ out/
 local.properties
 .settings/
 *.launch
-.classpath
 .factorypath
 
 
