@@ -74,7 +74,7 @@ public class DashboardController implements Initializable  {
 	private URL filePath;
 
 	@FXML
-	private Button logout;
+	private Button logoutButton;
 
     @FXML
     private Button goToFormations;
@@ -1879,7 +1879,7 @@ public class DashboardController implements Initializable  {
 
 
 	@FXML
-    private void logout(ActionEvent event){
+    private void logoutButton(ActionEvent event){
 		try {
 			URL myURL = new URL(filePath.toString().replace("/log/LogScreen.fxml","/dashboard/DashboardScreen.fxml"));
 			Parent root = FXMLLoader.load(myURL);
