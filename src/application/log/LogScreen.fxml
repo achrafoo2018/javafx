@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="980.0" styleClass="parent" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.log.LogController">
+   <children>
+      <Pane prefHeight="480.0" prefWidth="980.0" style="-fx-background-color: #1a1e3c;" styleClass="pane">
+         <children>
+            <Line endX="100.0" layoutX="791.0" layoutY="99.0" startX="-100.0" stroke="WHITE" />
+            <ImageView fitHeight="64.0" fitWidth="81.0" layoutX="563.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Assets/left.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="64.0" fitWidth="81.0" layoutX="216.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Assets/right.png" />
+               </image>
+            </ImageView>
+            <Line endX="100.0" layoutX="128.0" layoutY="99.0" startX="-100.0" stroke="WHITE" />
+            <Label layoutX="27.0" layoutY="17.0" text="Vous n'avez pas un compte ?" textFill="#45cafc">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <Button layoutX="27.0" layoutY="47.0" mnemonicParsing="false" onAction="#open_signup" prefHeight="40.0" prefWidth="157.0" styleClass="trans-btn-white-border" text="Créer un compte" />
+            <Label layoutX="563.0" layoutY="17.0" text="Vous avez un compte ?" textFill="#45cafc">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <Button layoutX="664.0" layoutY="47.0" mnemonicParsing="false" onAction="#open_signin" prefHeight="40.0" prefWidth="222.0" text="Accéder à l'authentification" />
+            <VBox alignment="CENTER_LEFT" layoutX="28.0" layoutY="113.0" prefHeight="322.0" prefWidth="343.0">
+               <children>
+                  <Label text="Connectez-vous" textFill="#45cafc">
+                     <font>
+                        <Font name="Segoe Print Bold" size="21.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <children>
+                        <TextField fx:id="signInName" onKeyTyped="#loginButtonActivation" promptText="Login" styleClass="tf_box" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="15.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+                     <children>
+                        <PasswordField fx:id="signInPassword" onAction="#loginButtonActivation" onKeyPressed="#loginButtonActivation" onKeyReleased="#loginButtonActivation" onKeyTyped="#loginButtonActivation" promptText="Password" styleClass="tf_box" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="15.0" />
+                           </HBox.margin>
+                        </PasswordField>
+                     </children>
+                  </HBox>
+                  <Button fx:id="signInButton" disable="true" mnemonicParsing="false" onAction="#signIn" prefHeight="40.0" prefWidth="350.0" styleClass="trans-btn-white-border" text="S'authentifier">
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Label fx:id="loginError" prefHeight="49.0" prefWidth="313.0" style="-fx-text-alignment: center;" styleClass="errorsLabel" text="Login et Password n’acceptent que des chaines de caractère!" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" layoutX="563.0" layoutY="113.0" prefHeight="322.0" prefWidth="343.0">
+               <children>
+                  <Label text="S'inscrire" textFill="#45cafc">
+                     <font>
+                        <Font name="Segoe Print Bold" size="21.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <children>
+                        <TextField fx:id="signUpLogin" onKeyTyped="#SignUpButtonActivation" promptText="Login" styleClass="tf_box" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="15.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+                     <children>
+                        <PasswordField fx:id="signUpPassword" onKeyTyped="#SignUpButtonActivation" promptText="Password" styleClass="tf_box" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="15.0" top="15.0" />
+                           </HBox.margin>
+                        </PasswordField>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+                     <children>
+                        <Label text="Role: " textFill="#f93154">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </Label>
+                        <RadioButton fx:id="roleAdmin" mnemonicParsing="false" selected="true" text="Administrateur" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                           <toggleGroup>
+                              <ToggleGroup fx:id="role" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="roleUser" mnemonicParsing="false" text="Simple Utilisateur" textFill="WHITE" toggleGroup="$role" />
+                     </children>
+                  </HBox>
+                  <Button fx:id="createButton" disable="true" mnemonicParsing="false" onAction="#signUp" prefHeight="40.0" prefWidth="350.0" styleClass="trans-btn-white-border" text="Créer">
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Label fx:id="loginError2" prefHeight="49.0" prefWidth="332.0" style="-fx-text-alignment: center;" styleClass="errorsLabel" text="Login et Password n’acceptent que des chaines de caractère!" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets left="15.0" right="15.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox fx:id="vbox" alignment="CENTER" layoutX="21.0" prefHeight="480.0" prefWidth="480.0" style="-fx-background-color: #090e27;" styleClass="myvbox">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="430" fitWidth="430" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Assets/login.gif" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+               </children></VBox>
+            <Button layoutX="941.0" layoutY="-6.0" mnemonicParsing="false" onAction="#exit" prefHeight="17.0" prefWidth="32.0" styleClass="exitBtn" text="X">
+               <font>
+                  <Font name="Segoe Print" size="12.0" />
+               </font></Button>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
