@@ -4,4 +4,10 @@ bin/applicaton/DataBase.java
 .metadata/
 *.iml
 out/
+local.properties
+.settings/
+*.launch
+.classpath
+.factorypath
+
 
