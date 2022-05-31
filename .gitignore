@@ -2,4 +2,6 @@ src/application/DataBase.java
 bin/applicaton/DataBase.java
 .idea/
 .metadata/
+*.iml
+
 
