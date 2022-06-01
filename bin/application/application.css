@@ -3,10 +3,11 @@
 	-fx-background-color:transparent;
 }
 
-.exitBtn{
+.exitbtn{
 	-fx-background-color:transparent !important;
-	-fx-text-fill: white !important;
+    -fx-text-fill: #000 !important;
 }
+
 
 .pane{
 	-fx-background-color:#051838;
