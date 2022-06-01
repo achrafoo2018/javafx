@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import application.*;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
 
 import application.Models.DomaineModel;
@@ -1089,7 +1090,13 @@ public class DashboardController implements Initializable  {
 
 		ObservableList<FormateurModel> formateurObservables = FXCollections.observableArrayList() ;
 		formateurTable.setItems(formateurObservables);
-
+		formateurTable.setFixedCellSize(25);
+		if(myFormateurs.size() > 0)
+			formateurTable.prefHeightProperty().bind(formateurTable.fixedCellSizeProperty().multiply(Bindings.size(formateurTable.getItems()).add(1.01)));
+		else
+			formateurTable.prefHeightProperty().bind(formateurTable.fixedCellSizeProperty().multiply(3.01));
+		formateurTable.minHeightProperty().bind(formateurTable.prefHeightProperty());
+		formateurTable.maxHeightProperty().bind(formateurTable.prefHeightProperty());
 		for(int i=0;i<myFormateurs.size();i++) {
 			formateurObservables.add(myFormateurs.get(i));
 
@@ -1154,8 +1161,8 @@ public class DashboardController implements Initializable  {
 			formateurMessageLabel.setText("Le prenom du nouvel instructeur n'accepte que des chaines de caractére!");
 		}else if(!LogController.isNumber(telephone)) {
 			formateurMessageLabel.setText("Le numero du telephone du nouvel instructeur n'accepte que des chiffre!");
-		}else if(telephone.length() !=9) {
-			formateurMessageLabel.setText("Le numero du telephone du nouvel instructeur doit étre composée de 9 chiffre!");
+		}else if(telephone.length() != 8) {
+			formateurMessageLabel.setText("Le numero du telephone du nouvel instructeur doit étre composée de 8 chiffre!");
 		}else if(!LogController.isEmail(email)) {
 			formateurMessageLabel.setText("E-mail non valide!");
 		}else if(domaineId==0){
@@ -1202,8 +1209,8 @@ public class DashboardController implements Initializable  {
 			formateurMessageLabel.setText("Le nouvel prenom d'instructeur n'accepte que des chaines de caractére!");
 		}else if(!LogController.isNumber(telephone)) {
 			formateurMessageLabel.setText("Le nouvel numero du telephone d'instructeur n'accepte que des chiffre!");
-		}else if(telephone.length() !=9) {
-			formateurMessageLabel.setText("Le nouvel numero du telephone d'instructeur doit étre composée de 9 chiffre!");
+		}else if(telephone.length() != 8) {
+			formateurMessageLabel.setText("Le nouvel numero du telephone d'instructeur doit étre composée de 8 chiffre!");
 		}else if(!LogController.isEmail(email)) {
 			formateurMessageLabel.setText("Le nouvel E-mail non valide!");
 		}else if(domaineId==0){
@@ -1237,7 +1244,7 @@ public class DashboardController implements Initializable  {
 		int id;
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("Supprimer");
-		alert.setHeaderText("Êtes-Vous Sure de Supprimer Ce Formateur ?");
+		alert.setHeaderText("Êtes-vous sûr de supprimer ce formateur ?");
 		if (alert.showAndWait().get() == ButtonType.OK){
 			formateurMessageLabel.setVisible(true);
 			formateurMessageLabel.setStyle("-fx-background-color:#f93154;");
@@ -1351,7 +1358,6 @@ public class DashboardController implements Initializable  {
 
 		for(int i=0;i<myFormations.size();i++) {
 			formationObservables.add(myFormations.get(i));
-
 		}
 	}
 
