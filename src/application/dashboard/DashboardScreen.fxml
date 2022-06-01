@@ -22,25 +22,46 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1224.0" style="-fx-background-color: #444242;" stylesheets="@dashboard.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.dashboard.DashboardController">
-<Pane prefHeight="660.0" prefWidth="1224.0" style="-fx-border-color: white; -fx-border-image-width: 5px;" styleClass="mainBackground">
-         <children>
-      
-            <VBox fx:id="menu" alignment="TOP_CENTER" layoutX="5.0" layoutY="5.0" prefHeight="650.0" prefWidth="248.0" styleClass="menuHolder">
-               <children>
-                  <ImageView fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../Assets/logo.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
-                  </ImageView>
-            <Label prefHeight="11.0" prefWidth="273.0" style="-fx-alignment: center;"  textAlignment="CENTER" textFill="WHITE" wrapText="true">
-               <font>
-                  <Font name="Segoe Print Bold" size="20.0" />
-               </font>
+	<Pane prefHeight="660.0" prefWidth="1224.0" style="-fx-border-color: white; -fx-border-image-width: 5px;" styleClass="mainBackground">
+		<children>
+			<VBox fx:id="menu" alignment="TOP_CENTER" layoutX="5.0" layoutY="5.0" prefHeight="650.0" prefWidth="248.0" styleClass="menuHolder">
+				<children>
+					<ImageView fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true">
+						<image>
+							<Image url="@../../Assets/user_avatar.png" />
+						</image>
+						<VBox.margin>
+							<Insets bottom="5.0" top="20.0" />
+						</VBox.margin>
+					</ImageView>
+					<HBox alignment="CENTER">
+						<ImageView fitHeight="10" fitWidth="10" pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="@../../Assets/online_dot.png" />
+							</image>
+							<VBox.margin>
+								<Insets top="10.0" />
+							</VBox.margin>
+						</ImageView>
+						<Label fx:id="windowTitle" textFill="WHITE">
+							<font>
+								<Font name="System Bold" size="15.0" />
+							</font>
+							
+                     <HBox.margin>
+                        <Insets left="4.0" />
+                     </HBox.margin>
+						</Label>
+                  <Text fx:id="loggedUserName" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="User">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Text>
+					</HBox>
+               <Line endX="133.2928924560547" endY="-4.3451786041259766E-5" startX="-100.0" stroke="#c9c4c4">
                   <VBox.margin>
                      <Insets bottom="60.0" />
                   </VBox.margin>
@@ -2676,4 +2697,4 @@
          </StackPane>
 	</children>
 	</Pane>
-  </Pane>
+</Pane>

@@ -24,7 +24,7 @@ public class FormateurCrud {
 			}else if(!DomaineCrud.getDomaineById(cn, Domaine)) {
 				return "Ce Domaine n'existe Pas!";
 			}else {
-				pr = cn.prepareStatement("insert into Formateur (Nom,Prenom,Domaine,Email,Num_telephone) values (?,?,?,?,?)");
+				pr = cn.prepareStatement("insert into formateur (Nom,Prenom,Domaine,Email,Num_telephone) values (?,?,?,?,?)");
 				pr.setString(1, Nom.trim());
 				pr.setString(2, Prenom.trim());
 				pr.setInt(3,Domaine);
@@ -50,7 +50,7 @@ public String modifyFormateur(Connection cn,int id,String Nom,String Prenom,int 
 			}else if(!getFormateurById(cn, id)) {
 				return "Ce Formateur n'existe Pas!";
 			}else {
-				pr = cn.prepareStatement("update Formateur set Nom=?,Prenom=?,Domaine=?,Email=?,Num_telephone=? where Code_formateur = ?");
+				pr = cn.prepareStatement("update formateur set Nom=?,Prenom=?,Domaine=?,Email=?,Num_telephone=? where Code_formateur = ?");
 				pr.setString(1, Nom.trim());
 				pr.setString(2, Prenom.trim());
 				pr.setInt(3,Domaine);
@@ -73,7 +73,7 @@ public String deleteFormateur(Connection cn,int id) {
 	// supprimer Formateur 
 	if(getFormateurById(cn, id)) {
 	try {
-		pr = cn.prepareStatement("delete from Formateur where Code_formateur = ?");
+		pr = cn.prepareStatement("delete from formateur where Code_formateur = ?");
 		pr.setInt(1, id);
 		pr.executeUpdate();
 		return "Le formateur a été supprimé.";
@@ -90,7 +90,7 @@ public String deleteFormateur(Connection cn,int id) {
 	public  ArrayList<FormateurModel> getAllFormateurs(Connection cn) {
 		ArrayList<FormateurModel> resultArray = new ArrayList<FormateurModel>();
 		try {
-			pr = cn.prepareStatement("select Code_formateur,Nom,Prenom,Domaine,Email,Num_telephone from Formateur order by Nom asc");
+			pr = cn.prepareStatement("select Code_formateur,Nom,Prenom,Domaine,Email,Num_telephone from formateur order by Nom asc");
 			ResultSet rs = pr.executeQuery();
 			while(rs.next()) {
 				String domaine=Character.toUpperCase(DomaineCrud.getDomaineLibelleById(cn,rs.getInt(4)).charAt(0)) + DomaineCrud.getDomaineLibelleById(cn,rs.getInt(4)).substring(1);
@@ -109,9 +109,9 @@ public String deleteFormateur(Connection cn,int id) {
 		}
 	
 	public static FormateurModel getSignleFormateurById(Connection cn,int id) {
-		// verifier si le Formateur est deja existe
+		// verifier si le formateur est deja existe
 		try {
-			pr = cn.prepareStatement("select Nom,Prenom,Domaine,Email,Num_telephone from Formateur where Code_formateur=? ");
+			pr = cn.prepareStatement("select Nom,Prenom,Domaine,Email,Num_telephone from formateur where Code_formateur=? ");
 			pr.setInt(1, id);
 			ResultSet rs = pr.executeQuery();
 			
@@ -134,9 +134,9 @@ public String deleteFormateur(Connection cn,int id) {
 	
 	
 	public static boolean getFormateurById(Connection cn,int id) {
-		// verifier si le Formateur est deja existe
+		// verifier si le formateur est deja existe
 		try {
-			pr = cn.prepareStatement("select Code_formateur from Formateur where Code_formateur=? ");
+			pr = cn.prepareStatement("select Code_formateur from formateur where Code_formateur=? ");
 			pr.setInt(1, id);
 			ResultSet rs = pr.executeQuery();
 			
@@ -158,7 +158,7 @@ public String deleteFormateur(Connection cn,int id) {
 	public static int getFormateurIdByName(Connection cn,String name) {
 		// verifier si le formateur est deja existe
 		try {
-			pr = cn.prepareStatement("select Code_formateur from Formateur where CONCAT(Nom,' ',Prenom) =? ");
+			pr = cn.prepareStatement("select Code_formateur from formateur where CONCAT(Nom,' ',Prenom) =? ");
 			pr.setString(1, name);
 			ResultSet rs = pr.executeQuery();
 			

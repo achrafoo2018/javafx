@@ -1,42 +1,46 @@
 -- Creation du base de donnée:
-CREATE DATABASE gestion_formation;
+
+--
+-- Database: `gestion_formation`
+--
 
 -- Table Utilisateur
-CREATE TABLE Utilisateur(
+CREATE TABLE utilisateur(
     Code_utilisateur INT AUTO_INCREMENT PRIMARY KEY,
     Login VARCHAR(100),
     Password VARCHAR(100),
+    Name VARCHAR(100),
     Role VARCHAR(15) CHECK (Role IN ('Administrateur', 'Utilisateur'))
     );
 	
 	
 -- Table Domaine
-CREATE TABLE Domaine(
+CREATE TABLE domaine(
     Code_domaine INT AUTO_INCREMENT PRIMARY KEY,
     libelle VARCHAR(100) UNIQUE
     );
 
 
 -- Table Profil
-CREATE TABLE Profil(
+CREATE TABLE profil(
     Code_profil INT AUTO_INCREMENT PRIMARY KEY,
     libelle VARCHAR(100) UNIQUE
     );
 	
 -- Table Formateur
-CREATE TABLE Formateur(
+CREATE TABLE formateur(
     Code_formateur INT AUTO_INCREMENT PRIMARY KEY,
     Nom VARCHAR(100),
     Prenom VARCHAR(100),
     Domaine INT,
     Email VARCHAR(100),
     Num_telephone INT,
-    CONSTRAINT FOREIGN KEY (Domaine) REFERENCES Domaine(Code_domaine)
+    CONSTRAINT FOREIGN KEY (Domaine) REFERENCES domaine(Code_domaine)
     );
 	
 	
 -- Table Formation
-CREATE TABLE Formation(
+CREATE TABLE formation(
     Code_formation INT AUTO_INCREMENT PRIMARY KEY,
     Intitulé VARCHAR(100),
     Domaine INT,
@@ -45,29 +49,29 @@ CREATE TABLE Formation(
     mois INT,
     Formateur INT,
     Nombre_participants INT,
-    CONSTRAINT FOREIGN KEY (Domaine) REFERENCES Domaine(Code_domaine),
-    CONSTRAINT FOREIGN KEY (Formateur) REFERENCES Formateur(Code_formateur)
+    CONSTRAINT FOREIGN KEY (Domaine) REFERENCES domaine(Code_domaine),
+    CONSTRAINT FOREIGN KEY (Formateur) REFERENCES formateur(Code_formateur)
     );
 
 
 
 -- Table Participant
-CREATE TABLE Participant(
+CREATE TABLE participant(
     Matricule_participant INT PRIMARY KEY,
     Nom VARCHAR(100),
     Prenom VARCHAR(100),
     Profil INT,
     Date_naissance DATE,
-    CONSTRAINT FOREIGN KEY (Profil) REFERENCES Profil(Code_profil)
+    CONSTRAINT FOREIGN KEY (Profil) REFERENCES profil(Code_profil)
     );
 
 
 -- Table Participation
-CREATE TABLE Participation(
+CREATE TABLE participation(
     Matricule_participant INT,
     Code_formation INT,
-    CONSTRAINT FOREIGN KEY (Matricule_participant) REFERENCES Participant(Matricule_participant),
-	CONSTRAINT FOREIGN KEY (Code_formation) REFERENCES Formation(Code_formation),
+    CONSTRAINT FOREIGN KEY (Matricule_participant) REFERENCES participant(Matricule_participant),
+	CONSTRAINT FOREIGN KEY (Code_formation) REFERENCES formation(Code_formation),
 	primary key (Code_formation, Matricule_participant)
     );
 
@@ -95,20 +99,20 @@ INSERT INTO `domaine`(`libelle`) VALUES ('design');
 INSERT INTO `domaine`(`libelle`) VALUES ('securite');
 
 -- Remplire Profil
-INSERT INTO `Profil`(`libelle`) VALUES ('Architecte Logiciel');
-INSERT INTO `Profil`(`libelle`) VALUES ('Architecte Infrastructure');
-INSERT INTO `Profil`(`libelle`) VALUES ('Technicien Informatique');
-INSERT INTO `Profil`(`libelle`) VALUES ('Scrum Master');
-INSERT INTO `Profil`(`libelle`) VALUES ('Ingénieur Systèmes');
-INSERT INTO `Profil`(`libelle`) VALUES ('Ingénieur Réseau');
-INSERT INTO `Profil`(`libelle`) VALUES ('Développeur');
-INSERT INTO `Profil`(`libelle`) VALUES ('Infirmier');
-INSERT INTO `Profil`(`libelle`) VALUES ('Analyste Financier');
-INSERT INTO `Profil`(`libelle`) VALUES ('Credit Manager');
-INSERT INTO `Profil`(`libelle`) VALUES ('Expert Financier');
-INSERT INTO `Profil`(`libelle`) VALUES ('Logisticien');
-INSERT INTO `Profil`(`libelle`) VALUES ('Analyste Marketing');
-INSERT INTO `Profil`(`libelle`) VALUES ('Webmarketeur');
-INSERT INTO `Profil`(`libelle`) VALUES ('Directeur Marketing');
-INSERT INTO `Profil`(`libelle`) VALUES ('Directeur Média');
-INSERT INTO `Profil`(`libelle`) VALUES ('Avocat');
+INSERT INTO `profil`(`libelle`) VALUES ('Architecte Logiciel');
+INSERT INTO `profil`(`libelle`) VALUES ('Architecte Infrastructure');
+INSERT INTO `profil`(`libelle`) VALUES ('Technicien Informatique');
+INSERT INTO `profil`(`libelle`) VALUES ('Scrum Master');
+INSERT INTO `profil`(`libelle`) VALUES ('Ingénieur Systèmes');
+INSERT INTO `profil`(`libelle`) VALUES ('Ingénieur Réseau');
+INSERT INTO `profil`(`libelle`) VALUES ('Développeur');
+INSERT INTO `profil`(`libelle`) VALUES ('Infirmier');
+INSERT INTO `profil`(`libelle`) VALUES ('Analyste Financier');
+INSERT INTO `profil`(`libelle`) VALUES ('Credit Manager');
+INSERT INTO `profil`(`libelle`) VALUES ('Expert Financier');
+INSERT INTO `profil`(`libelle`) VALUES ('Logisticien');
+INSERT INTO `profil`(`libelle`) VALUES ('Analyste Marketing');
+INSERT INTO `profil`(`libelle`) VALUES ('Webmarketeur');
+INSERT INTO `profil`(`libelle`) VALUES ('Directeur Marketing');
+INSERT INTO `profil`(`libelle`) VALUES ('Directeur Média');
+INSERT INTO `profil`(`libelle`) VALUES ('Avocat');
