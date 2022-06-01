@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import application.Models.DomaineModel;
 import application.Models.FormateurModel;
 
 public class FormateurCrud {

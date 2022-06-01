@@ -1,0 +1,197 @@
+.mainBackground{
+	-fx-background-color:#FFFFFF;
+
+}
+
+.menuHolder{
+	-fx-background-color:#008080;
+
+	-fx-border-image-width:1px;
+	-fx-border-color:#008080;
+}
+
+.menuItem{
+	-fx-background-color:transparent;
+}
+.head-background
+{
+    -fx-background-color: linear-gradient(to left,#795AF3 ,#3929E0);
+}
+
+.menuItem:hover{
+	-fx-background-color:#252849;
+}
+
+.exitbutton{
+	-fx-background-color:#2e3462;
+	-fx-background-radius: 0px 0px 0px 30px;
+	-fx-border-radius: 0px 0px 0px 30px;
+	-fx-border-image-width:1px;
+	-fx-border-color:#495bed;
+}
+
+.exitbutton:hover{
+	-fx-background-color:#252849;
+}
+
+
+
+.usefulButtons{
+	-fx-background-radius: 30;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+	-fx-background-color: 
+        linear-gradient(#2096ff, #05ffa3),
+        linear-gradient(#ffef84, #f2ba44),
+        linear-gradient(#ffea6a, #efaa22),
+        linear-gradient(#45cafc 0%, #303f9f 100%),
+        linear-gradient( from 0% 0% to 15% 50%, rgba(255,255,255,1), rgba(255,255,255,0) );
+    
+    
+}
+
+
+.dangerButtons{
+	-fx-background-radius: 30;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+	-fx-background-color: 
+        linear-gradient(#2096ff, #05ffa3),
+        linear-gradient(#ffef84, #f2ba44),
+        linear-gradient(#ffea6a, #efaa22),
+        linear-gradient(#ff4444 0%, #d32f2f 100%),
+        linear-gradient( from 0% 0% to 15% 50%, rgba(255,255,255,1), rgba(255,255,255,0) );
+    
+    
+}
+
+
+.greenButtons{
+	-fx-background-radius: 30;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+	-fx-background-color: 
+        linear-gradient(#2096ff, #05ffa3),
+        linear-gradient(#ffef84, #f2ba44),
+        linear-gradient(#ffea6a, #efaa22),
+        linear-gradient(#00C851 0%, #007E33 100%),
+        linear-gradient( from 0% 0% to 15% 50%, rgba(255,255,255,1), rgba(255,255,255,0) );
+    
+    
+}
+
+
+.tf_box{
+    -fx-background-color: transparent;
+    -fx-border-color: #DEDEE4;
+    -fx-border-width: 0px 0px 1px 0px;
+    -fx-text-fill: white;
+}
+
+.errorsLabel{
+	-fx-background-color:#f93154;
+	-fx-border-color: #DEDEE4;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-font-weight:bold;
+    -fx-font-size:14px;
+}
+
+
+.paneStyle{
+	 -fx-background-color:#FFFFFF;
+	 -fx-border-color: #495bed;
+	 -fx-pref-width:949;
+	 -fx-pref-height:589;
+}
+
+
+
+.table-view{
+   -fx-background-color: #EFEFEF;
+
+}
+
+.table-view:focused{
+    -fx-background-color: transparent;
+}
+
+.table-view .filler{
+    -fx-background-color:  #EFEFEF;
+    -fx-border-width: 0 0 50 0;
+}
+
+/* Spaltenk�pfe
+    Struktur column-header-background -> column-header */
+
+.table-view .column-header-background{
+    -fx-background-color: linear-gradient(#008080 0%, #008080 100%);
+
+}
+
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: 9E9E9E;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.table-view .table-cell{
+    -fx-text-fill: 9E9E9E;
+}
+
+.table-row-cell{
+    -fx-background-color: -fx-table-cell-border-color, #EDEDED;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */
+}
+
+.table-row-cell:odd{
+    -fx-background-color: -fx-table-cell-border-color, #BABABA;
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-padding: 0.0em; /* 0 */  
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #C1BFB1;
+    -fx-background-insets: 0;
+    -fx-background-radius: 1;
+}
+
+.table-view > .virtual-flow > .scroll-bar:vertical,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track,
+.table-view > .virtual-flow > .scroll-bar:vertical > .track-background, 
+.table-view > .virtual-flow > .scroll-bar:horizontal,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track,
+.table-view > .virtual-flow > .scroll-bar:horizontal > .track-background {
+    -fx-background-color: transparent;
+}
+
+
+
+.table-view .virtual-flow .scroll-bar:vertical .thumb{
+    -fx-background-color:  #008080;
+}
+.table-view .virtual-flow .scroll-bar:horizontal .thumb {
+    -fx-background-color:  #008080;
+}
+
+.table-view > .virtual-flow > .scroll-bar > .increment-button, 
+.table-view > .virtual-flow > .scroll-bar > .decrement-button {
+    -fx-opacity: 0;
+}
+
+
+.scroll-pane > .viewport {
+   -fx-background-color: transparent;
+}

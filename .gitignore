@@ -2,11 +2,4 @@ src/application/DataBase.java
 bin/applicaton/DataBase.java
 .idea/
 .metadata/
-*.iml
-out/
-local.properties
-.settings/
-*.launch
-.factorypath
-
 
