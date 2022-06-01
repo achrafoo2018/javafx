@@ -31,7 +31,7 @@
                <children>
                   <ImageView fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../Assets/logo.png" />
+                        <Image url="@../../Assets/user_avatar.png" />
                      </image>
                      <VBox.margin>
                         <Insets top="20.0" />
@@ -200,7 +200,7 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../Assets/student.png" />
+                              <Image url="@../../Assets/participant.png" />
                            </image>
                            <HBox.margin>
                               <Insets right="15.0" />
