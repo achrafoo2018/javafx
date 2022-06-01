@@ -36,14 +36,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DateCell;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
@@ -73,8 +66,7 @@ public class DashboardController implements Initializable  {
 	@FXML
 	private URL filePath;
 
-	@FXML
-	private Button logout;
+
 
 	@FXML
 	private Button goToFormations;
@@ -1239,13 +1231,20 @@ public class DashboardController implements Initializable  {
 
 	@FXML
 	private void deleteFormateur(ActionEvent event){
-		formateurMessageLabel.setVisible(true);
-		formateurMessageLabel.setStyle("-fx-background-color:#f93154;");
 
-		// collecter les donner saisit par l'utilisateur
-		int id=deleteFormateurIdCombo.getValue();
+		String result=null;
+		int id;
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Supprimer");
+		alert.setHeaderText("Êtes-Vous Sure de Supprimer Ce Formateur ?");
+		if (alert.showAndWait().get() == ButtonType.OK){
+			formateurMessageLabel.setVisible(true);
+			formateurMessageLabel.setStyle("-fx-background-color:#f93154;");
 
-		String result = formateur.deleteFormateur(cnx,id);
+			// collecter les donner saisit par l'utilisateur
+			 id=deleteFormateurIdCombo.getValue();
+			 result = formateur.deleteFormateur(cnx,id);
+		}
 		// verifier si le domaine a été ajouté
 		if(result.contains("Le formateur a été supprimé.")) {
 			formateurMessageLabel.setText("Le formateur a été supprimé.");
@@ -1780,6 +1779,9 @@ public class DashboardController implements Initializable  {
 		}else {
 			participantMessageLabel.setText(result);
 		}
+
+
+
 	}
 
 
@@ -1879,7 +1881,7 @@ public class DashboardController implements Initializable  {
 
 
 	@FXML
-	private void logout(ActionEvent event){
+	private void Logout(ActionEvent event){
 		try {
 			//redirection to another stage
 			URL myURL = new URL(filePath.toString().replace("/dashboard/DashboardScreen.fxml", "/log/LogScreen.fxml"));
@@ -1893,6 +1895,10 @@ public class DashboardController implements Initializable  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+
+
+
 	}
 
 

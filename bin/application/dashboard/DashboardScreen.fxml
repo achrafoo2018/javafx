@@ -238,7 +238,7 @@
                               <Rectangle2D />
                            </viewport>
                         </ImageView>
-                     <Button fx:id="logoutButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#changeWindow" prefHeight="40.0" prefWidth="209.0" styleClass="menuItem" text="Logout" textFill="WHITE">
+                     <Button fx:id="logout" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#changeWindow" prefHeight="40.0" prefWidth="209.0" styleClass="menuItem" text="Logout" textFill="WHITE">
                         <font>
                            <Font name="System Bold" size="16.0" />
                         </font>
@@ -313,7 +313,7 @@
             <children>
                <Pane fx:id="domainesPane" prefHeight="200.0" prefWidth="200.0" styleClass="paneStyle">
                   <children>
-                     <VBox prefHeight="589.0" prefWidth="949.0" style="-fx-background-color: #2e3462; -fx-border-color: #495bed;">
+                     <VBox prefHeight="589.0" prefWidth="949.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #FFFFFF;">
                         <children>
                            <ScrollPane style="-fx-background-color: transparent;">
                               <content>
@@ -489,7 +489,7 @@
                </Pane>
                <Pane fx:id="userPane">
                   <children>
-                     <VBox prefHeight="589.0" prefWidth="949.0" style="-fx-background-color: #2e3462; -fx-border-color: #495bed;">
+                     <VBox prefHeight="589.0" prefWidth="949.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #FFFFFF;">
                         <children>
                            <ScrollPane style="-fx-background-color: transparent;">
                               <content>
@@ -685,7 +685,7 @@
                </Pane>
                <Pane fx:id="participantPane">
                   <children>
-                     <VBox prefHeight="589.0" prefWidth="949.0" style="-fx-background-color: #2e3462; -fx-border-color: #495bed;">
+                     <VBox prefHeight="589.0" prefWidth="949.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #FFFFFF;">
                         <children>
                            <ScrollPane style="-fx-background-color: transparent;">
                               <content>
@@ -952,7 +952,7 @@
                </Pane>
                <Pane fx:id="formateurPane">
                   <children>
-                     <VBox prefHeight="589.0" prefWidth="949.0" style="-fx-background-color: #2e3462; -fx-border-color: #495bed;">
+                     <VBox prefHeight="589.0" prefWidth="949.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #FFFFFF;">
                         <children>
                            <ScrollPane style="-fx-background-color: transparent;">
                               <content>
@@ -980,6 +980,7 @@
                                           <GridPane.margin>
                                              <Insets left="15.0" right="-15.0" />
                                           </GridPane.margin>
+
                                        </TableView>
                                        <VBox prefHeight="392.0" prefWidth="916.0">
                                           <children>
@@ -1225,7 +1226,7 @@
                </Pane>
                <Pane fx:id="profilsPane" prefHeight="200.0" prefWidth="200.0" styleClass="paneStyle">
                   <children>
-                     <VBox prefHeight="589.0" prefWidth="949.0" style="-fx-background-color: #2e3462; -fx-border-color: #495bed;">
+                     <VBox prefHeight="589.0" prefWidth="949.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #FFFFFF;">
                         <children>
                            <ScrollPane style="-fx-background-color: transparent;">
                               <content>
@@ -1401,7 +1402,7 @@
                </Pane>
                <Pane fx:id="participationPane">
                   <children>
-                     <VBox prefHeight="589.0" prefWidth="949.0" style="-fx-background-color: #2e3462; -fx-border-color: #495bed;">
+                     <VBox prefHeight="589.0" prefWidth="949.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #FFFFFF;">
                         <children>
                            <ScrollPane style="-fx-background-color: transparent;">
                               <content>
@@ -1674,7 +1675,7 @@
                </Pane>
                <Pane fx:id="formationPane">
                   <children>
-                     <VBox prefHeight="589.0" prefWidth="949.0" style="-fx-background-color: #2e3462; -fx-border-color: #495bed;">
+                     <VBox prefHeight="589.0" prefWidth="949.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #FFFFFF;">
                         <children>
                            <ScrollPane style="-fx-background-color: transparent;">
                               <content>
