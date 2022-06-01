@@ -14,38 +14,40 @@ public class UtilisateurCrud {
 	Scanner sc = new Scanner(System.in);
 	PreparedStatement pr =null;
 	
-	public String signUp(Connection cn,String login,String password,int role) {
+	public String signUp(Connection DBConnection,String login,String password,int role, String name) {
 
 		
 		try {
 			//contréle sur les données saisi
-			if(login.length()==0 || password.length()==0 ||role > 2 || role <0) {
+			if(login.length()==0 || password.length()==0 ||role > 2 || role <0 || name.length()==0){
 				return "Tous les champs sont obligatoires et doivent étre remplis correctement !";
 			}else {
-				if(!getUserByLog(cn,login)) {
-				pr = cn.prepareStatement("insert into utilisateur (Login,Password,Role)values(?,?,?)");
-				pr.setString(1, login.trim());
-				pr.setString(2, password.trim());
-				pr.setString(3, role==1?"Administrateur":"utilisateur");
-				pr.executeUpdate();
-				return "L'utilisateur a été ajouté avec succés.";
-			
-			}else {
-				return "L'utilisateur a déja existe!";
-			}
+				if(!getUserByLog(DBConnection,login)) {
+					pr = DBConnection.prepareStatement("insert into utilisateur (Login, Name,Password,Role)values(?,?,?,?)");
+					pr.setString(1, login.trim());
+					pr.setString(2, name.trim());
+					pr.setString(3, password.trim());
+					pr.setString(4, role==1?"Administrateur":"utilisateur");
+					pr.executeUpdate();
+					return "L'utilisateur a été ajouté avec succés.";
+
+				}else {
+					return "L'utilisateur a déja existe!";
+				}
 			}
 			
 			
 		}catch(SQLException e) {
+			e.printStackTrace();
 			return "Opération échouée !";
 		}
 	}
 	
 	
-	public String signIn(Connection cn,String login,String password) {
+	public String signIn(Connection DBConnection,String login,String password) {
 		// créer un nouvelle utilisateur
 		try {
-			pr = cn.prepareStatement("select Role from utilisateur where Login=? and Password=?");
+			pr = DBConnection.prepareStatement("select Role from utilisateur where Login=? and Password=?");
 			pr.setString(1, login.trim());
 			pr.setString(2, password.trim());
 			ResultSet rs = pr.executeQuery();
@@ -63,14 +65,14 @@ public class UtilisateurCrud {
 		}
 	
 	
-	public String modifyUser(Connection cn,int id,String login,String password) {
+	public String modifyUser(Connection DBConnection,int id,String login,String password) {
 		
 		try {
 			//contréle sur les données saisi
 			if(login.length()==0 || password.length()==0) {
 				return "Tous les champs sont obligatoires et doivent étre remplis correctement !";
 			}else {
-				pr = cn.prepareStatement("update utilisateur set Login=?,Password=? where Code_utilisateur = ?");
+				pr = DBConnection.prepareStatement("update utilisateur set Login=?,Password=? where Code_utilisateur = ?");
 				pr.setString(1, login.trim());
 				pr.setString(2, password.trim());
 				pr.setInt(3,id);
@@ -87,10 +89,10 @@ public class UtilisateurCrud {
 	
 	
 	
-	public boolean getUserByLog(Connection cn,String login) {
+	public boolean getUserByLog(Connection DBConnection,String login) {
 		//  verifier si l'utilisateur est deja existe 
 		try {
-			pr = cn.prepareStatement("select Login from utilisateur where Login=? ");
+			pr = DBConnection.prepareStatement("select Login from utilisateur where Login=? ");
 			pr.setString(1, login.trim());
 			ResultSet rs = pr.executeQuery();
 			
@@ -107,32 +109,49 @@ public class UtilisateurCrud {
 			}
 		}
 	
+	public String getUserNameByLogin(Connection DBConnection, String login) {
+		//  get user name
+		try {
+			pr = DBConnection.prepareStatement("select name from utilisateur where Login=? ");
+			pr.setString(1, login.trim());
+			ResultSet rs = pr.executeQuery();
+			if(rs.next()) {
+				return rs.getString(1).trim();
+			}
+			
+			return "Utilisateur";
+			
+			}catch(SQLException e) {
+				// System.out.println(e.getMessage());
+				return "Utilisateur";
+			}
+		}
 	
-	
-	public ArrayList<UserModel> getAllUsers(Connection cn) {
+	public ArrayList<UserModel> getAllUsers(Connection DBConnection) {
 		ArrayList<UserModel> resultArray = new ArrayList<UserModel>();
 		try {
-			pr = cn.prepareStatement("select Code_utilisateur,Login,Password from utilisateur where Role='Utilisateur' ");
+			pr = DBConnection.prepareStatement("select Code_utilisateur,Login,Password, Name from utilisateur where Role='Utilisateur' ");
 			ResultSet rs = pr.executeQuery();
 			
 			while(rs.next()) {
-				resultArray.add(new UserModel(rs.getInt(1), rs.getString(2), rs.getString(3)));
+				resultArray.add(new UserModel(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));
 			}
 			
 			return resultArray;
 			
-			}catch(SQLException e) {
-				System.out.println(e.getMessage());
-				System.out.println("Opération échouée !");
-				return resultArray;
-				
-			}
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+			System.out.println("Opération échouée !");
+			return resultArray;
+			
 		}
+	}
+
 	
-	public String deleteUser(Connection cn,String login) {
-		if(this.getUserByLog(cn, login)) {
+	public String deleteUser(Connection DBConnection,String login) {
+		if(this.getUserByLog(DBConnection, login)) {
 		try {
-			pr = cn.prepareStatement("delete from utilisateur where Login = ?");
+			pr = DBConnection.prepareStatement("delete from utilisateur where Login = ?");
 			pr.setString(1, login);
 			pr.executeUpdate();
 			return "L'utilisateur a été supprimé.";

@@ -9,6 +9,7 @@ CREATE TABLE utilisateur(
     Code_utilisateur INT AUTO_INCREMENT PRIMARY KEY,
     Login VARCHAR(100),
     Password VARCHAR(100),
+    Name VARCHAR(100),
     Role VARCHAR(15) CHECK (Role IN ('Administrateur', 'Utilisateur'))
     );
 	
