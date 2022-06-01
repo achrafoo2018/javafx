@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -24,7 +25,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1224.0" style="-fx-background-color: #444242;" stylesheets="@dashboard.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.dashboard.DashboardController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="1224.0" style="-fx-background-color: #444242;" stylesheets="@dashboard.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.dashboard.DashboardController">
 	<Pane prefHeight="660.0" prefWidth="1224.0" style="-fx-border-color: white; -fx-border-image-width: 5px;" styleClass="mainBackground">
 		<children>
 			<VBox fx:id="menu" alignment="TOP_CENTER" layoutX="5.0" layoutY="5.0" prefHeight="650.0" prefWidth="248.0" styleClass="menuHolder">
@@ -2501,78 +2502,67 @@
 
                                        <VBox prefHeight="500.0" prefWidth="1000.0" GridPane.rowIndex="1">
                                           <children>
-                                             <Label text="Ajouter un Domaine" textFill="#17202A">
-                                                <font>
-                                                   <Font name="normal" size="25.0" />
-                                                </font>
-                                                <VBox.margin>
-                                                   <Insets top="35.0" />
-                                                </VBox.margin>
-                                             </Label>
-                                             <HBox alignment="CENTER" prefHeight="128.0" prefWidth="799.0">
-                                    <children>
-                                       <VBox prefHeight="116.0" prefWidth="907.0" HBox.hgrow="ALWAYS">
-                                          <children>
-                                             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                             <Group VBox.vgrow="ALWAYS">
+                                                <children>
+                              
+                              
+                                       <HBox />
+                                                </children>
+                                             </Group>
+                                             <HBox alignment="CENTER" prefHeight="297.0" prefWidth="791.0">
+                                                <children>
+                                                <VBox prefHeight="297.0" prefWidth="785.0">
+                                                <children>
+                                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                                 <children>
                                                    <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
                                                       <children>
-
-
-                                                         <HBox VBox.vgrow="ALWAYS">
-                                                            <children>
-                                                               <Label text="Libelle" textFill="#566573">
-                                                                  <font>
-                                                                     <Font name="normal" size="18.0" />
-                                                                  </font>
-                                                                  <VBox.margin>
-                                                                     <Insets top="52.0" />
-                                                                  </VBox.margin>
-                                                                              <HBox.margin>
-                                                                                 <Insets top="10.0" />
-                                                                              </HBox.margin>
-
-
-                                                               </Label>
-                                                               <TextField fx:id="newDomaine" onKeyTyped="#createDomaineButtonActivation" styleClass="tf_box" HBox.hgrow="ALWAYS">
-                                                                  <font>
-                                                                     <Font size="14.0" />
-                                                                  </font>
-                                                                  <HBox.margin>
-                                                                     <Insets bottom="10.0" left="38.0" right="500.0" top="10.0" />
-                                                                  </HBox.margin>
-                                                               </TextField>
-                                                            </children>
-                                                         </HBox>
-
-                                                         <HBox>
-
-                                                            <children>
-                                                               <Button fx:id="createDomaineButton" disable="true" mnemonicParsing="false" onAction="#createDomaine" prefHeight="40.0" prefWidth="117.0" styleClass="usefulButtons" text="Ajouter">
-                                                                  <HBox.margin>
-                                                                     <Insets left="370.0" top="-40.0" />
-                                                                  </HBox.margin>
-                                                                  <cursor>
-                                                                     <Cursor fx:constant="HAND" />
-                                                                  </cursor>
-                                                               </Button>
-                                                            </children>
-                                                         </HBox>
-
-
-
-
-
+                                                
+                                                         <HBox />
+                                                
+                                                
+                                                
+                                                
+                                                
                                                       </children>
                                                    </VBox>
-
+                                                
                                                 </children>
                                                 <padding>
                                                    <Insets right="10.0" />
                                                 </padding>
-                                             </HBox>
-
-                                                         <Label text="Modifier un Domaine" textFill="#17202A">
+                                                </HBox>
+                                                         <Label text="Ajouter un Domaine" textFill="#17202A">
+                                                            <font>
+                                                               <Font name="normal" size="25.0" />
+                                                            </font>
+                                                            <VBox.margin>
+                                                               <Insets top="35.0" />
+                                                            </VBox.margin>
+                                                         </Label>
+                                                         <Group>
+                                                            <children>
+                                                   <Label layoutX="14.0" layoutY="9.0" text="Libelle" textFill="#566573">
+                                                      <font>
+                                                         <Font name="normal" size="18.0" />
+                                                      </font>
+                                                
+                                                            
+                                                   </Label>
+                                                   <TextField fx:id="newDomaine" alignment="TOP_LEFT" layoutX="79.0" layoutY="9.0" onKeyTyped="#createDomaineButtonActivation" prefHeight="32.0" prefWidth="401.0" styleClass="tf_box">
+                                                      <font>
+                                                         <Font name="SansSerif Regular" size="14.0" />
+                                                      </font>
+                                                   </TextField>
+                                                      <Button fx:id="createDomaineButton" contentDisplay="TOP" disable="true" layoutX="491.0" layoutY="10.0" mnemonicParsing="false" onAction="#createDomaine" prefHeight="38.0" prefWidth="129.0" styleClass="usefulButtons" text="Ajouter">
+                                                      <cursor>
+                                                         <Cursor fx:constant="HAND" />
+                                                      </cursor>
+                                                      </Button>
+                                                            </children>
+                                                         </Group>
+                                                      
+                                                                                                                                                                     <Label text="Modifier un Domaine" textFill="#17202A">
                                                             <font>
                                                                <Font name="normal" size="25.0" />
                                                             </font>
@@ -2580,11 +2570,11 @@
                                                                <Insets top="20.0" />
                                                             </VBox.margin>
                                                          </Label>
-                                             <HBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
+                                                <HBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0">
                                                 <children>
-                                                   <VBox alignment="CENTER" prefHeight="131.0" prefWidth="743.0">
-                                                      <children>
-                                                         <HBox>
+                                                            <VBox prefHeight="75.0" prefWidth="714.0">
+                                                            <children>
+                                                            <HBox prefHeight="50.0" prefWidth="525.0">
                                                             <children>
                                                                <Label text="Id" textFill="#566573">
                                                                   <font>
@@ -2593,8 +2583,8 @@
                                                                   <padding>
                                                                      <Insets left="-50" top="8.0" />
                                                                   </padding>
-
-                                                               </Label>
+                                                            
+                                                                                                                                                                                                                                                                                                                                                                                                                                       </Label>
                                                                <ComboBox fx:id="domaineIdsCombo" promptText="Sélectionnez l'id du domaine à modifier">
                                                                   <opaqueInsets>
                                                                      <Insets />
@@ -2604,12 +2594,12 @@
                                                                   </HBox.margin>
                                                                   <padding>
                                                                      <Insets bottom="2.0" right="2.0" top="2.0" />
-
-                                                                  </padding>
+                                                            
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </padding>
                                                                </ComboBox>
                                                             </children>
-                                                         </HBox>
-                                                         <HBox>
+                                                            </HBox>
+                                                            <HBox prefHeight="41.0" prefWidth="478.0">
                                                             <children>
                                                                <Label text="Libelle" textFill="#566573">
                                                                   <font>
@@ -2618,8 +2608,8 @@
                                                                   <padding>
                                                                      <Insets left="-50" top="8.0" />
                                                                   </padding>
-
-                                                               </Label>
+                                                            
+                                                                                                                                                                                                                                                                                                                                                                                                                                             </Label>
                                                                <TextField fx:id="domaineModifyLibelle" onKeyTyped="#modifyDomaineButtonActivation" styleClass="tf_box" HBox.hgrow="ALWAYS">
                                                                   <font>
                                                                      <Font size="14.0" />
@@ -2629,38 +2619,28 @@
                                                                   </HBox.margin>
                                                                </TextField>
                                                             </children>
-                                                         </HBox>
-                                                         <HBox>
-                                                            <children>
-                                                         <Button fx:id="modifyDomaineButton" disable="true" mnemonicParsing="false" onAction="#ModifierDomaine" prefHeight="40.0" prefWidth="117.0" styleClass="greenButtons" text="Enregistrer">
-                                                            <HBox.margin>
-                                                               <Insets left="435.0" top="10.0" />
-                                                            </HBox.margin>
-                                                            <cursor>
-                                                               <Cursor fx:constant="HAND" />
-                                                            </cursor>
-                                                         </Button>
-                                                            </children>
-                                                         </HBox>
-
-
-                                                      </children>
-                                                   </VBox>
-
+                                                            </HBox>
+                                                                  <Button fx:id="modifyDomaineButton" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#ModifierDomaine" prefHeight="40.0" prefWidth="221.0" styleClass="greenButtons" text="Enregistrer">
+                                                                  <cursor>
+                                                                  <Cursor fx:constant="HAND" />
+                                                                  </cursor>
+                                                                  </Button>
+                                                            
+                                                                                                                                                                                                                                                                                                                                                                                                                        
+                                                                                                                                                                                                                                                                                                                                                                                                                                          </children>
+                                                            </VBox>
+                                                
                                                 </children>
                                                 <padding>
                                                    <Insets right="10.0" />
                                                 </padding>
-
-                                             </HBox>
-
-
-                                          </children>
-                                          <HBox.margin>
-                                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                          </HBox.margin>
-                                       </VBox>
-                                    </children>
+                                                
+                                                </HBox>
+                                                
+                                                
+                                                </children>
+                                                </VBox>
+                                                </children>
                                              </HBox>
 
                                              <Label fx:id="domaineMessageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="929.0" style="-fx-alignment: center;" styleClass="errorsLabel" text="Message Logger" textAlignment="CENTER" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS">
@@ -2700,4 +2680,5 @@
          </StackPane>
 	</children>
 	</Pane>
+<HBox layoutX="-264.0" layoutY="842.0" />
 </Pane>
