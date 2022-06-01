@@ -42,8 +42,12 @@
     -fx-font-size: 14px;
     -fx-padding: 9 14 9 14;
 	-fx-background-color: #008CBA;
-    
-    
+}
+
+
+.usefulButtons:hover{
+    -fx-cusor: hand;
+    -fx-background-color: #00BFFF;
 }
 
 .btn-center{
@@ -52,13 +56,12 @@
 
 
 .dangerButtons{
-	 -fx-text-fill: white;
-            -fx-background-radius: 5;
-            -fx-font-weight: bold;
-            -fx-font-size: 14px;
-            -fx-padding: 5 11 5 11;
-        	-fx-background-color: #f44336;
-    
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 5 11 5 11;
+    -fx-background-color: #f44336;
     
 }
 
