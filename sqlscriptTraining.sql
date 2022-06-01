@@ -1,5 +1,8 @@
 -- Creation du base de donnée:
-CREATE DATABASE gestion_formation;
+
+--
+-- Database: `gestion_formation`
+--
 
 -- Table Utilisateur
 CREATE TABLE Utilisateur(
