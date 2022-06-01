@@ -114,6 +114,20 @@
                            </HBox.margin>
                         </TextField>
                      </children>
+                  </HBox> <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <children>
+                        <TextField fx:id="signUpName" onKeyTyped="#SignUpButtonActivation" promptText="Name" styleClass="tf_box" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="15.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
                   </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="200.0">
                      <children>
