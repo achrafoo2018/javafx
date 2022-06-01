@@ -26,7 +26,6 @@ public class Main extends Application {
 	
 	private Task copyWorker;
 	private Text LoadingLabel;
-	private Text LoadingPercent;
 	private Parent root;
 	private Scene scene;
 	private Stage stage;
@@ -46,20 +45,9 @@ public class Main extends Application {
 			   primaryStage.show();
 			   
 			   LoadingLabel = (Text) scene.lookup("#LoadingLabel");
-			   LoadingPercent = (Text) scene.lookup("#LoadingPercent");
-			   ProgressBar progressBar = (ProgressBar) scene.lookup("#LoadingBar");
 			   
 			   copyWorker = createWorker(primaryStage);
-			   
-			   progressBar.progressProperty().unbind();
-               progressBar.progressProperty().bind(copyWorker.progressProperty());
-               copyWorker.messageProperty().addListener(new ChangeListener<String>() {
-                   public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                       System.out.println(newValue);
-
-                   }
-               });
-               
+			                  
                new Thread(copyWorker).start();
                PauseTransition delay = new PauseTransition(Duration.seconds(3));
                delay.setOnFinished( event -> {
@@ -120,7 +108,6 @@ public class Main extends Application {
 		            	LoadingLabel.setText("Launching Application...");
 		            }
 		            
-		            LoadingPercent.setText(i+" %");
                     updateProgress(i,100);
 
                 }
