@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import application.DataBase;
 import application.UtilisateurCrud;
+import application.dashboard.DashboardController;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,11 +28,11 @@ import javafx.util.Duration;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 
-public class LogController implements Initializable {
+public class LoginController implements Initializable {
 
 	
 	private DataBase db;
-	private Connection cnx;
+	private Connection DBConnection;
 	private URL filePath;
 	public static String role ="user";
 	
@@ -55,6 +56,8 @@ public class LogController implements Initializable {
 	private Button createButton;
     @FXML
 	private TextField signUpLogin;
+	@FXML
+	private TextField signUpName;
     @FXML
 	private PasswordField signUpPassword;
     @FXML
@@ -64,7 +67,7 @@ public class LogController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
     	// constructeur 
     	db = new DataBase();
-		cnx = db.connecterBase();
+		DBConnection = db.connecterBase();
 		filePath=url;
 		
     	
@@ -109,20 +112,23 @@ public class LogController implements Initializable {
     	
     	loginError.setVisible(true);
     	loginError.setStyle("-fx-background-color:#f93154;");
-    	UtilisateurCrud user = new UtilisateurCrud();
+		signInButton.setDisable(true);
+
+    	UtilisateurCrud userCRUD = new UtilisateurCrud();
     	// collecter les donner saisit par l'utilisateur
     	String login=signInName.getText().trim();
     	String password=signInPassword.getText().trim();
 		
-		
 		// verifier si le login et le mot de passe sont correct
-			String result = user.signIn(cnx,login,password);
+			String result = userCRUD.signIn(DBConnection,login,password);
 			// verifier si les donner sont correct
 			if(result.contains("Role")) {
 				role =result.contains("Administrateur") ? "admin" : "user";
 				try {
 					//redirection to another stage
-					URL myURL = new URL(filePath.toString().replace("/log/LogScreen.fxml","/dashboard/DashboardScreen.fxml"));
+					String userName = userCRUD.getUserNameByLogin(DBConnection, login);
+					DashboardController.setLoggedUser(userName);
+					URL myURL = new URL(filePath.toString().replace("/log/LoginView.fxml","/dashboard/DashboardScreen.fxml"));
 					Parent root = FXMLLoader.load(myURL);
 					Scene scene = new Scene(root);
 					Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -132,18 +138,12 @@ public class LogController implements Initializable {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					signInButton.setDisable(false);
 				}
 			}else {
 				loginError.setText(result);
-				
+				signInButton.setDisable(false);
 			}
-			
-		//}
-		
-		
-		
-		
-		
     }
     
 
@@ -201,7 +201,8 @@ public class LogController implements Initializable {
     	// activer/disactiver le button de SignUp
     	String login=signUpLogin.getText().trim();
     	String password=signUpPassword.getText().trim();
-    	if(login.length()!=0 && password.length()!=0) {
+		String name=signUpName.getText().trim();
+    	if(login.length()!=0 && password.length()!=0 && name.length()!=0) {
     		createButton.setDisable(false);
     	}else {
     		createButton.setDisable(true);
@@ -214,26 +215,27 @@ public class LogController implements Initializable {
     private void signUp(ActionEvent event){
     	loginError2.setVisible(true);
     	loginError2.setStyle("-fx-background-color:#f93154;");
-    	UtilisateurCrud user = new UtilisateurCrud();
+    	UtilisateurCrud userCRUD = new UtilisateurCrud();
     	// collecter les donner saisit par l'utilisateur
     	String login=signUpLogin.getText().trim();
     	String password=signUpPassword.getText().trim();
-		
+		String name=signUpName.getText().trim();
 		
 		// verifier les donner saisit par l'utilisateur
-		if(containsNumber(login) || containsNumber(password)) {
-			loginError2.setText("Login et Password néacceptent que des chaines de caractére!");
+		if(containsNumber(login)) {
+			loginError2.setText("Login n'accepte que des chaines de caractére!");
 		}else {
 			
 			
 			role =roleAdmin.isSelected()?"admin":"user";
-			String result = user.signUp(cnx,login,password,roleAdmin.isSelected()?1:0);
+			String result = userCRUD.signUp(DBConnection,login,password,roleAdmin.isSelected()?1:0, name);
 			// verifier si l'utilisateur a été ajouté
 			if(result.contains("L'utilisateur a été ajouté avec succés.")) {
 
 				try {
 					//redirection to another stage
-					URL myURL = new URL(filePath.toString().replace("/log/LogScreen.fxml","/dashboard/DashboardScreen.fxml"));
+					DashboardController.setLoggedUser(name);
+					URL myURL = new URL(filePath.toString().replace("/log/LoginView.fxml","/dashboard/DashboardScreen.fxml"));
 					Parent root = FXMLLoader.load(myURL);
 					Scene scene = new Scene(root);
 					Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();

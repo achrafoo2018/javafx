@@ -28,7 +28,7 @@ public class FormationCrud {
 			}else if(!FormateurCrud.getFormateurById(cn, Formateur)) {
 				return "Ce formateur n'existe Pas!";
 			}else {
-				pr = cn.prepareStatement("insert into Formation (Intitulé,Domaine,Nombre_jours,Annee,mois,Formateur,Nombre_participants) values (?,?,?,?,?,?,?)");
+				pr = cn.prepareStatement("insert into formation (Intitulé,Domaine,Nombre_jours,Annee,mois,Formateur,Nombre_participants) values (?,?,?,?,?,?,?)");
 				pr.setString(1,Intitulé.trim());
 				pr.setInt(2, Domaine);
 				pr.setInt(3, Nombre_jours);
@@ -61,7 +61,7 @@ public String modifyFormation(Connection cn,int id,String Intitulé,int Domaine,
 			}else if(!FormationCrud.getFormationById(cn, id)) {
 				return "Cette formation n'existe Pas!";
 			}else {
-				pr = cn.prepareStatement("update Formation set Intitulé=?,Domaine=?,Nombre_jours=?,Annee=?,mois=?,Formateur=?,Nombre_participants=? where Code_formation = ?");
+				pr = cn.prepareStatement("update formation set Intitulé=?,Domaine=?,Nombre_jours=?,Annee=?,mois=?,Formateur=?,Nombre_participants=? where Code_formation = ?");
 				pr.setString(1,Intitulé.trim());
 				pr.setInt(2, Domaine);
 				pr.setInt(3, Nombre_jours);
@@ -85,10 +85,10 @@ public String modifyFormation(Connection cn,int id,String Intitulé,int Domaine,
 	
 	
 public String deleteFormation(Connection cn,int id) {
-	// supprimer Formation 
+	// supprimer formation 
 	if(getFormationById(cn, id)) {
 	try {
-		pr = cn.prepareStatement("delete from Formation where Code_formation = ?");
+		pr = cn.prepareStatement("delete from formation where Code_formation = ?");
 		pr.setInt(1, id);
 		pr.executeUpdate();
 		return "La formation a été supprimé.";
@@ -108,7 +108,7 @@ public String deleteFormation(Connection cn,int id) {
 public  ArrayList<FormationModel> getAllFormations(Connection cn) {
 	ArrayList<FormationModel> resultArray = new ArrayList<FormationModel>();
 	try {
-		pr = cn.prepareStatement("select Code_formation,Intitulé,Domaine,Nombre_jours,Annee,mois,Formateur,Nombre_participants from Formation order by Intitulé asc");
+		pr = cn.prepareStatement("select Code_formation,Intitulé,Domaine,Nombre_jours,Annee,mois,Formateur,Nombre_participants from formation order by Intitulé asc");
 		ResultSet rs = pr.executeQuery();
 		while(rs.next()) {
 			FormateurModel formateur = FormateurCrud.getSignleFormateurById(cn, rs.getInt(7));
@@ -136,9 +136,9 @@ public  ArrayList<FormationModel> getAllFormations(Connection cn) {
 	
 	
 public static boolean getFormationById(Connection cn,int id) {
-	// verifier si le Formation est deja existe
+	// verifier si le formation est deja existe
 	try {
-		pr = cn.prepareStatement("select Code_formation from Formation where Code_formation=? ");
+		pr = cn.prepareStatement("select Code_formation from formation where Code_formation=? ");
 		pr.setInt(1, id);
 		ResultSet rs = pr.executeQuery();
 		
@@ -158,9 +158,9 @@ public static boolean getFormationById(Connection cn,int id) {
 
 
 public static FormationModel getSignleFormationById(Connection cn,int id) {
-	// verifier si le Formation est deja existe
+	// verifier si le formation est deja existe
 	try {
-		pr = cn.prepareStatement("select Code_formation,Intitulé,Domaine,Nombre_jours,Annee,mois,Formateur,Nombre_participants from Formation where Code_formation=? ");
+		pr = cn.prepareStatement("select Code_formation,Intitulé,Domaine,Nombre_jours,Annee,mois,Formateur,Nombre_participants from formation where Code_formation=? ");
 		pr.setInt(1, id);
 		ResultSet rs = pr.executeQuery();
 		

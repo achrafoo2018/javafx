@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 import application.*;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
 
 import application.Models.DomaineModel;
@@ -20,7 +21,7 @@ import application.Models.FormationModel;
 import application.Models.ParticipantModel;
 import application.Models.ProfilModel;
 import application.Models.UserModel;
-import application.log.LogController;
+import application.log.LoginController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -34,6 +35,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -41,14 +43,16 @@ public class DashboardController implements Initializable  {
 
 	// database instance
 	private DataBase db;
-	private Connection cnx;
-	private UtilisateurCrud user;
-	private ProfilCrud profil;
-	private DomaineCrud domaine;
-	private FormateurCrud formateur;
-	private FormationCrud formation;
-	private ParticipantCrud participant;
+	private Connection DBconnection;
+	private UtilisateurCrud userCRUD;
+	private ProfilCrud profilCRUD;
+	private DomaineCrud domaineCRUD;
+	private FormateurCrud formateurCRUD;
+	private FormationCrud formationCRUD;
+	private ParticipantCrud participantCRUD;
 
+	// Name of current logged user
+	public static String loggedUser;
 	//menu
 	@FXML
 	private Button goToDomaines;
@@ -110,6 +114,10 @@ public class DashboardController implements Initializable  {
 	private Label windowTitle;
 	@FXML
 	private TextField newLogin;
+	@FXML
+	private TextField newName;
+	@FXML
+	private Text loggedUserName;
 	@FXML
 	private TextField newPassword;
 	@FXML
@@ -384,31 +392,31 @@ public class DashboardController implements Initializable  {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
 		db = new DataBase();
-		cnx = db.connecterBase();
+		DBconnection = db.connecterBase();
 		filePath=arg0;
 
 		// user Screen setups
-		user = new UtilisateurCrud();
+		userCRUD = new UtilisateurCrud();
 		userIDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
 		userLoginColumn.setCellValueFactory(new PropertyValueFactory<>("Login"));
 		userPasswordColumn.setCellValueFactory(new PropertyValueFactory<>("Password"));
 
 
 		// profil Screen setups
-		profil = new ProfilCrud();
+		profilCRUD = new ProfilCrud();
 		profilIDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
 		profilLibelleColumn.setCellValueFactory(new PropertyValueFactory<>("Libelle"));
 
 
 		// Domaine Screen setups
-		domaine = new DomaineCrud();
+		domaineCRUD = new DomaineCrud();
 		domaineIDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
 		domaineLibelleColumn.setCellValueFactory(new PropertyValueFactory<>("Libelle"));
 		loadDomaines();
 		loadDomainesIDS();
 
 		// Formateur Screen setups
-		formateur = new FormateurCrud();
+		formateurCRUD = new FormateurCrud();
 		formateurIDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
 		formateurNomColumn.setCellValueFactory(new PropertyValueFactory<>("Nom"));
 		formateurPrenomColumn.setCellValueFactory(new PropertyValueFactory<>("Prenom"));
@@ -418,7 +426,7 @@ public class DashboardController implements Initializable  {
 
 
 		// Formation Screen setups
-		formation = new FormationCrud();
+		formationCRUD = new FormationCrud();
 		formationIDColumn.setCellValueFactory(new PropertyValueFactory<>("ID"));
 		formationIntituleColumn.setCellValueFactory(new PropertyValueFactory<>("Intitule"));
 		formationDomaineColumn.setCellValueFactory(new PropertyValueFactory<>("Domaine"));
@@ -429,7 +437,7 @@ public class DashboardController implements Initializable  {
 		formationParticipantsColumn.setCellValueFactory(new PropertyValueFactory<>("Nombre_participants"));
 
 		// participant Screen setups
-		participant = new ParticipantCrud();
+		participantCRUD = new ParticipantCrud();
 		participantMatriculeColumn.setCellValueFactory(new PropertyValueFactory<>("Matricule_participant"));
 		participantNomColumn.setCellValueFactory(new PropertyValueFactory<>("Nom"));
 		participantPrenomColumn.setCellValueFactory(new PropertyValueFactory<>("Prenom"));
@@ -457,7 +465,7 @@ public class DashboardController implements Initializable  {
 		loadAll();
 
 		// update menu on role
-		if(LogController.role =="user") {
+		if(LoginController.role =="user") {
 			menu.getChildren().remove(UsersButtonHolder);
 			windowTitle.setText("Profils");
 			profilsPane.toFront();
@@ -513,6 +521,7 @@ public class DashboardController implements Initializable  {
 		loadParticipant();
 		loadParticipantMatricule();
 		loadProfilsLibelles();
+		this.loggedUserName.setText(String.valueOf(this.getLoggedUser()));
 	}
 
 
@@ -551,7 +560,7 @@ public class DashboardController implements Initializable  {
 
 	public void loadUsers() {
 		// get all users
-		ArrayList<UserModel> myUsers = user.getAllUsers(cnx);
+		ArrayList<UserModel> myUsers = userCRUD.getAllUsers(DBconnection);
 
 		ObservableList<UserModel> userObservables = FXCollections.observableArrayList() ;
 		usersTable.setItems(userObservables);
@@ -565,7 +574,7 @@ public class DashboardController implements Initializable  {
 
 	public void loadUsersIDS() {
 		// remplire comboBox
-		ArrayList<UserModel> myUsers = user.getAllUsers(cnx);
+		ArrayList<UserModel> myUsers = userCRUD.getAllUsers(DBconnection);
 
 		ObservableList<Integer> userIdsObservables = FXCollections.observableArrayList() ;
 		userIdsCombo.setItems(userIdsObservables);
@@ -586,17 +595,17 @@ public class DashboardController implements Initializable  {
 		// collecter les donner saisit par l'utilisateur
 		String login=newLogin.getText().trim();
 		String password=newPassword.getText().trim();
-
+		String name=newName.getText().trim();
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(login) || LogController.containsNumber(password)) {
-			userCreationLabel.setText("Login et Password néacceptent que des chaines de caractére!");
-		}else if(user.getUserByLog(cnx, login)){
+		if(LoginController.containsNumber(login)) {
+			userCreationLabel.setText("Login n'accepte que des chaines de caractére!");
+		}else if(userCRUD.getUserByLog(DBconnection, login)){
 			userCreationLabel.setText("Login est deja existe!");
 		}else {
 
 
-			String result = user.signUp(cnx,login,password,0);
+			String result = userCRUD.signUp(DBconnection,login,password,0, name);
 			// verifier si l'utilisateur a été ajouté
 			if(result.contains("L'utilisateur a été ajouté avec succés.")) {
 				userCreationLabel.setText("L'utilisateur a été ajouté avec succés.");
@@ -623,17 +632,17 @@ public class DashboardController implements Initializable  {
 
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(login) || LogController.containsNumber(password)) {
-			userCreationLabel.setText("Login et Password néacceptent que des chaines de caractére!");
+		if(LoginController.containsNumber(login)) {
+			userCreationLabel.setText("Login n'accepte que des chaines de caractére!");
 		}else if(userIdsCombo.getValue()==null) {
 			userCreationLabel.setText("Sélectionner l'identifiant du utilisateur é modifier!");
 		}
-		else if(user.getUserByLog(cnx, login)){
+		else if(userCRUD.getUserByLog(DBconnection, login)){
 			userCreationLabel.setText("Login est deja existe!");
 		}else {
 
 			int id=userIdsCombo.getValue();
-			String result = user.modifyUser(cnx,id,login,password);
+			String result = userCRUD.modifyUser(DBconnection,id,login,password);
 			// verifier si l'utilisateur a été ajouté
 			if(result.contains("L'utilisateur a été Modifié avec succés.")) {
 				userCreationLabel.setText("L'utilisateur a été Modifié avec succés.");
@@ -658,12 +667,12 @@ public class DashboardController implements Initializable  {
 		String login=userDeleteLogin.getText().trim();
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(login)) {
-			userCreationLabel.setText("Login néacceptent que des chaines de caractére!");
+		if(LoginController.containsNumber(login)) {
+			userCreationLabel.setText("Login n'accepte que des chaines de caractére!");
 		}else {
 
 
-			String result = user.deleteUser(cnx,login);
+			String result = userCRUD.deleteUser(DBconnection,login);
 			// verifier si l'utilisateur a été ajouté
 			if(result.contains("L'utilisateur a été supprimé.")) {
 				userCreationLabel.setText("L'utilisateur a été supprimé.");
@@ -728,7 +737,7 @@ public class DashboardController implements Initializable  {
 	public void loadProfils() {
 
 		// get all profiles
-		ArrayList<ProfilModel> myProfils = profil.getAllProfils(cnx);
+		ArrayList<ProfilModel> myProfils = profilCRUD.getAllProfils(DBconnection);
 
 		ObservableList<ProfilModel> profilObservables = FXCollections.observableArrayList() ;
 		profilTable.setItems(profilObservables);
@@ -744,7 +753,7 @@ public class DashboardController implements Initializable  {
 
 	public void loadProfilsIDS() {
 		// remplire comboBox
-		ArrayList<ProfilModel> myProfils = profil.getAllProfils(cnx);
+		ArrayList<ProfilModel> myProfils = profilCRUD.getAllProfils(DBconnection);
 
 		ObservableList<Integer> profilIdsObservables = FXCollections.observableArrayList() ;
 		profilIdsCombo.setItems(profilIdsObservables);
@@ -765,14 +774,14 @@ public class DashboardController implements Initializable  {
 		String libelle=newProfil.getText().trim().toLowerCase();
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(libelle)) {
-			profilMessageLabel.setText("Le Libelle du nouvel profil néacceptent que des chaines de caractére!");
-		}else if(profil.getProfilByLibelle(cnx, libelle)){
+		if(LoginController.containsNumber(libelle)) {
+			profilMessageLabel.setText("Le Libelle du nouvel profil n'accepte que des chaines de caractére!");
+		}else if(profilCRUD.getProfilByLibelle(DBconnection, libelle)){
 			profilMessageLabel.setText("Le Profile est deja existe!");
 		}else {
 
 
-			String result = profil.createProfil(cnx,libelle);
+			String result = profilCRUD.createProfil(DBconnection,libelle);
 			// verifier si le profil a été ajouté
 			if(result.contains("Le Profil a été ajouté avec succés.")) {
 				profilMessageLabel.setText("Le Profil a été ajouté avec succés.");
@@ -797,17 +806,17 @@ public class DashboardController implements Initializable  {
 		String libelle=profilModifyLibelle.getText().trim().toLowerCase();
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(libelle)) {
-			profilMessageLabel.setText("Le Libelle néacceptent que des chaines de caractére!");
+		if(LoginController.containsNumber(libelle)) {
+			profilMessageLabel.setText("Le Libelle n'accepte que des chaines de caractére!");
 		}else if(profilIdsCombo.getValue()==null) {
 			profilMessageLabel.setText("Sélectionner l'identifiant du profil é modifier!");
 		}
-		else if(profil.getProfilByLibelle(cnx, libelle)){
+		else if(profilCRUD.getProfilByLibelle(DBconnection, libelle)){
 			profilMessageLabel.setText("Le libelle est deja existe!");
 		}else {
 
 			int id=profilIdsCombo.getValue();
-			String result = profil.modifyProfil(cnx,id,libelle);
+			String result = profilCRUD.modifyProfil(DBconnection,id,libelle);
 			// verifier si l'utilisateur a été ajouté
 			if(result.contains("Le profil a été Modifié avec succés.")) {
 				profilMessageLabel.setText("Le profil a été Modifié avec succés.");
@@ -830,18 +839,13 @@ public class DashboardController implements Initializable  {
 		profilMessageLabel.setStyle("-fx-background-color:#f93154;");
 		String libelle = profilDeleteLogin.getText().trim().toLowerCase();
 		String result = null;
-
-		if (LogController.containsNumber(libelle)) {
-			profilMessageLabel.setText("Le Libelle néacceptent que des chaines de caractére!");
-		}
-		else {
-			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-			alert.setTitle("Suppression D'un Profil");
-			alert.setHeaderText("Êtes-Vous Sure de Supprimer Ce Profil ?");
-			if (alert.showAndWait().get() == ButtonType.OK) {
-				result = profil.deleteProfil(cnx, libelle);
-			}
-			if (result.contains("Le profil a été supprimé.")) {
+		// verifier les donner saisit par l'utilisateur
+		if(LoginController.containsNumber(libelle)) {
+			profilMessageLabel.setText("Le Libelle n'accepte que des chaines de caractére!");
+		}else {
+			result = profilCRUD.deleteProfil(DBconnection,libelle);
+			// verifier si l'utilisateur a été ajouté
+			if(result.contains("Le profil a été supprimé.")) {
 				profilMessageLabel.setText("Le profil a été supprimé.");
 				profilMessageLabel.setStyle("-fx-background-color:#33b5e5;");
 				loadAll();
@@ -902,7 +906,7 @@ public class DashboardController implements Initializable  {
 	public void loadDomaines() {
 		// remplire le tableau
 
-		ArrayList<DomaineModel> myDomaines = domaine.getAllDomaines(cnx);
+		ArrayList<DomaineModel> myDomaines = domaineCRUD.getAllDomaines(DBconnection);
 
 		ObservableList<DomaineModel> domaineObservables = FXCollections.observableArrayList() ;
 		domaineTable.setItems(domaineObservables);
@@ -917,7 +921,7 @@ public class DashboardController implements Initializable  {
 
 	public void loadDomainesIDS() {
 		// remplire comboBox
-		ArrayList<DomaineModel> myDomaine = domaine.getAllDomaines(cnx);
+		ArrayList<DomaineModel> myDomaine = domaineCRUD.getAllDomaines(DBconnection);
 
 		ObservableList<Integer> domaineIdsObservables = FXCollections.observableArrayList() ;
 		domaineIdsCombo.setItems(domaineIdsObservables);
@@ -938,14 +942,14 @@ public class DashboardController implements Initializable  {
 		String libelle=newDomaine.getText().trim().toLowerCase();
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(libelle)) {
-			domaineMessageLabel.setText("Le Libelle du nouvel domaine néacceptent que des chaines de caractére!");
-		}else if(domaine.getDomaineByLibelle(cnx, libelle)){
+		if(LoginController.containsNumber(libelle)) {
+			domaineMessageLabel.setText("Le Libelle du nouvel domaine n'accepte que des chaines de caractére!");
+		}else if(domaineCRUD.getDomaineByLibelle(DBconnection, libelle)){
 			domaineMessageLabel.setText("Le Domaine est deja existe!");
 		}else {
 
 
-			String result = domaine.createDomaine(cnx,libelle);
+			String result = domaineCRUD.createDomaine(DBconnection,libelle);
 			// verifier si le domaine a été ajouté
 			if(result.contains("Le domaine a été ajouté avec succés.")) {
 				domaineMessageLabel.setText("Le domaine a été ajouté avec succés.");
@@ -968,17 +972,17 @@ public class DashboardController implements Initializable  {
 		String libelle=domaineModifyLibelle.getText().trim().toLowerCase();
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(libelle)) {
-			domaineMessageLabel.setText("Le Libelle néacceptent que des chaines de caractére!");
+		if(LoginController.containsNumber(libelle)) {
+			domaineMessageLabel.setText("Le Libelle n'accepte que des chaines de caractére!");
 		}else if(domaineIdsCombo.getValue()==null) {
 			domaineMessageLabel.setText("Sélectionner l'identifiant du domaine é modifier!");
 		}
-		else if(domaine.getDomaineByLibelle(cnx, libelle)){
+		else if(domaineCRUD.getDomaineByLibelle(DBconnection, libelle)){
 			domaineMessageLabel.setText("Le libelle est deja existe!");
 		}else {
 
 			int id=domaineIdsCombo.getValue();
-			String result = domaine.modifyDomaine(cnx,id,libelle);
+			String result = domaineCRUD.modifyDomaine(DBconnection,id,libelle);
 			// verifier si le domaine a été ajouté
 			if(result.contains("Le domaine a été modifié avec succés.")) {
 				domaineMessageLabel.setText("Le domaine a été modifié avec succés.");
@@ -1007,14 +1011,14 @@ public class DashboardController implements Initializable  {
 		String libelle=domaineDeleteLogin.getText().trim().toLowerCase();
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(libelle)) {
-			domaineMessageLabel.setText("Le Libelle néacceptent que des chaines de caractére!");
+		if(LoginController.containsNumber(libelle)) {
+			domaineMessageLabel.setText("Le Libelle n'accepte que des chaines de caractére!");
 		}else {
 			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 			alert.setTitle("Suppression D'un Domaine");
 			alert.setHeaderText("Êtes-Vous Sure de Supprimer Ce Domaine ?");
 			if (alert.showAndWait().get() == ButtonType.OK) {
-				result = domaine.deleteDomaine(cnx,libelle);
+				result = domaineCRUD.deleteDomaine(DBconnection,libelle);
 			}
 			if(result.contains("Le domaine a été supprimé.")) {
 				domaineMessageLabel.setText("Le domaine a été supprimé.");
@@ -1081,11 +1085,10 @@ public class DashboardController implements Initializable  {
 	public void loadFormateurs() {
 		// remplire le tableau
 
-		ArrayList<FormateurModel> myFormateurs = formateur.getAllFormateurs(cnx);
+		ArrayList<FormateurModel> myFormateurs = formateurCRUD.getAllFormateurs(DBconnection);
 
 		ObservableList<FormateurModel> formateurObservables = FXCollections.observableArrayList() ;
 		formateurTable.setItems(formateurObservables);
-
 		for(int i=0;i<myFormateurs.size();i++) {
 			formateurObservables.add(myFormateurs.get(i));
 
@@ -1095,7 +1098,7 @@ public class DashboardController implements Initializable  {
 
 	public void loadDomainesLibelles() {
 		// remplire comboBox
-		ArrayList<DomaineModel> myDomaine = domaine.getAllDomaines(cnx);
+		ArrayList<DomaineModel> myDomaine = domaineCRUD.getAllDomaines(DBconnection);
 
 		ObservableList<String> domaineIdsObservables = FXCollections.observableArrayList() ;
 		newFormateurDomaineCombo.setItems(domaineIdsObservables);
@@ -1118,7 +1121,7 @@ public class DashboardController implements Initializable  {
 
 	public void loadFormateursIDS() {
 		// remplire comboBox
-		ArrayList<FormateurModel> myFormateur = formateur.getAllFormateurs(cnx);
+		ArrayList<FormateurModel> myFormateur = formateurCRUD.getAllFormateurs(DBconnection);
 
 		ObservableList<Integer> formateurIdsObservables = FXCollections.observableArrayList() ;
 		deleteFormateurIdCombo.setItems(formateurIdsObservables);
@@ -1141,18 +1144,18 @@ public class DashboardController implements Initializable  {
 		String prenom=newFormateurPrenom.getText().trim();
 		String email=newFormateurEmail.getText().trim();
 		String telephone=newFormateurTelephone.getText().trim();
-		int domaineId= domaine.getDomaineIdByLibelle(cnx, newFormateurDomaineCombo.getValue()==null?"":newFormateurDomaineCombo.getValue());
+		int domaineId= domaineCRUD.getDomaineIdByLibelle(DBconnection, newFormateurDomaineCombo.getValue()==null?"":newFormateurDomaineCombo.getValue());
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(nom)) {
-			formateurMessageLabel.setText("Le nom du nouvel instructeur néacceptent que des chaines de caractére!");
-		}else if(LogController.containsNumber(prenom)) {
-			formateurMessageLabel.setText("Le prenom du nouvel instructeur néacceptent que des chaines de caractére!");
-		}else if(!LogController.isNumber(telephone)) {
-			formateurMessageLabel.setText("Le numero du telephone du nouvel instructeur néacceptent que des chiffre!");
-		}else if(telephone.length() !=9) {
-			formateurMessageLabel.setText("Le numero du telephone du nouvel instructeur doit étre composée de 9 chiffre!");
-		}else if(!LogController.isEmail(email)) {
+		if(LoginController.containsNumber(nom)) {
+			formateurMessageLabel.setText("Le nom du nouvel instructeur n'accepte que des chaines de caractére!");
+		}else if(LoginController.containsNumber(prenom)) {
+			formateurMessageLabel.setText("Le prenom du nouvel instructeur n'accepte que des chaines de caractére!");
+		}else if(!LoginController.isNumber(telephone)) {
+			formateurMessageLabel.setText("Le numero du telephone du nouvel instructeur n'accepte que des chiffre!");
+		}else if(telephone.length() != 8) {
+			formateurMessageLabel.setText("Le numero du telephone du nouvel instructeur doit étre composée de 8 chiffre!");
+		}else if(!LoginController.isEmail(email)) {
 			formateurMessageLabel.setText("E-mail non valide!");
 		}else if(domaineId==0){
 			formateurMessageLabel.setText("Saisir le domaine du nouvel instructeur!");
@@ -1161,7 +1164,7 @@ public class DashboardController implements Initializable  {
 		}else {
 
 
-			String result = formateur.createFormateur(cnx,nom,prenom,domaineId,email,Integer.parseInt(telephone));
+			String result = formateurCRUD.createFormateur(DBconnection,nom,prenom,domaineId,email,Integer.parseInt(telephone));
 			// verifier si le formateur a été ajouté
 			if(result.contains("Le nouvel formateur a été ajouté avec succés.")) {
 				formateurMessageLabel.setText("Le nouvel formateur a été ajouté avec succés.");
@@ -1187,20 +1190,20 @@ public class DashboardController implements Initializable  {
 		String prenom=modifierFormateurPrenom.getText().trim();
 		String email=modifierFormateurEmail.getText().trim();
 		String telephone=modifierFormateurTelephone.getText().trim();
-		int domaineId= DomaineCrud.getDomaineIdByLibelle(cnx, modifierFormateurDomaineCombo.getValue()==null?"":modifierFormateurDomaineCombo.getValue());
+		int domaineId= DomaineCrud.getDomaineIdByLibelle(DBconnection, modifierFormateurDomaineCombo.getValue()==null?"":modifierFormateurDomaineCombo.getValue());
 
 
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(nom)) {
-			formateurMessageLabel.setText("Le nouvel nom d'instructeur néacceptent que des chaines de caractére!");
-		}else if(LogController.containsNumber(prenom)) {
-			formateurMessageLabel.setText("Le nouvel prenom d'instructeur néacceptent que des chaines de caractére!");
-		}else if(!LogController.isNumber(telephone)) {
-			formateurMessageLabel.setText("Le nouvel numero du telephone d'instructeur néacceptent que des chiffre!");
-		}else if(telephone.length() !=9) {
-			formateurMessageLabel.setText("Le nouvel numero du telephone d'instructeur doit étre composée de 9 chiffre!");
-		}else if(!LogController.isEmail(email)) {
+		if(LoginController.containsNumber(nom)) {
+			formateurMessageLabel.setText("Le nouvel nom d'instructeur n'accepte que des chaines de caractére!");
+		}else if(LoginController.containsNumber(prenom)) {
+			formateurMessageLabel.setText("Le nouvel prenom d'instructeur n'accepte que des chaines de caractére!");
+		}else if(!LoginController.isNumber(telephone)) {
+			formateurMessageLabel.setText("Le nouvel numero du telephone d'instructeur n'accepte que des chiffre!");
+		}else if(telephone.length() != 8) {
+			formateurMessageLabel.setText("Le nouvel numero du telephone d'instructeur doit étre composée de 8 chiffre!");
+		}else if(!LoginController.isEmail(email)) {
 			formateurMessageLabel.setText("Le nouvel E-mail non valide!");
 		}else if(domaineId==0){
 			formateurMessageLabel.setText("Saisir le domaine d'instructeur!");
@@ -1209,7 +1212,7 @@ public class DashboardController implements Initializable  {
 		}else {
 
 
-			String result = formateur.modifyFormateur(cnx,id,nom,prenom,domaineId,email,Integer.parseInt(telephone));
+			String result = formateurCRUD.modifyFormateur(DBconnection,id,nom,prenom,domaineId,email,Integer.parseInt(telephone));
 			// verifier si le formateur a été modifié
 			if(result.contains("Le Formateur a été modifié avec succés.")) {
 				formateurMessageLabel.setText("Le Formateur a été modifié avec succés.");
@@ -1233,14 +1236,14 @@ public class DashboardController implements Initializable  {
 		int id;
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
 		alert.setTitle("Suppression D'un Formateur");
-		alert.setHeaderText("Êtes-Vous Sure de Supprimer Ce Formateur ?");
+		alert.setHeaderText("Êtes-vous sûr de supprimer ce formateur ?");
 		if (alert.showAndWait().get() == ButtonType.OK){
 			formateurMessageLabel.setVisible(true);
 			formateurMessageLabel.setStyle("-fx-background-color:#f93154;");
 
 			// collecter les donner saisit par l'utilisateur
 			 id=deleteFormateurIdCombo.getValue();
-			 result = formateur.deleteFormateur(cnx,id);
+			 result = formateurCRUD.deleteFormateur(DBconnection,id);
 		}
 		// verifier si le domaine a été ajouté
 		if(result.contains("Le formateur a été supprimé.")) {
@@ -1300,7 +1303,7 @@ public class DashboardController implements Initializable  {
 
 		if(modifierFormateurIdCombo.getValue() != null && event.getSource() ==modifierFormateurIdCombo) {
 			int id =modifierFormateurIdCombo.getValue();
-			FormateurModel myformateur = formateur.getSignleFormateurById(cnx, id);
+			FormateurModel myformateur = formateurCRUD.getSignleFormateurById(DBconnection, id);
 			modifierFormateurNom.setText(myformateur.getNom());
 			modifierFormateurPrenom.setText(myformateur.getPrenom());
 			modifierFormateurEmail.setText(myformateur.getEmail());
@@ -1340,14 +1343,13 @@ public class DashboardController implements Initializable  {
 	public void loadFormation() {
 		// remplire le tableau
 
-		ArrayList<FormationModel> myFormations = formation.getAllFormations(cnx);
+		ArrayList<FormationModel> myFormations = formationCRUD.getAllFormations(DBconnection);
 
 		ObservableList<FormationModel> formationObservables = FXCollections.observableArrayList() ;
 		formationTable.setItems(formationObservables);
 
 		for(int i=0;i<myFormations.size();i++) {
 			formationObservables.add(myFormations.get(i));
-
 		}
 	}
 
@@ -1356,7 +1358,7 @@ public class DashboardController implements Initializable  {
 	public void loadFormateursNames() {
 		// remplire le tableau
 
-		ArrayList<FormateurModel> myFormateurs = formateur.getAllFormateurs(cnx);
+		ArrayList<FormateurModel> myFormateurs = formateurCRUD.getAllFormateurs(DBconnection);
 
 		ObservableList<String> formateurObservables = FXCollections.observableArrayList() ;
 		newFormationFormateurCombo.setItems(formateurObservables);
@@ -1370,7 +1372,7 @@ public class DashboardController implements Initializable  {
 
 	public void loadFormationsIDS() {
 		// remplire comboBox
-		ArrayList<FormationModel> myFormation = formation.getAllFormations(cnx);
+		ArrayList<FormationModel> myFormation = formationCRUD.getAllFormations(DBconnection);
 
 		ObservableList<Integer> formationIdsObservables = FXCollections.observableArrayList() ;
 		deleteFormationIdCombo.setItems(formationIdsObservables);
@@ -1383,6 +1385,14 @@ public class DashboardController implements Initializable  {
 
 
 
+	public static void setLoggedUser(String loggedUser) {
+		DashboardController.loggedUser = loggedUser;
+		System.out.println("loggedUser : "+loggedUser);
+	}
+
+	public String getLoggedUser() {
+		return this.loggedUser;
+	}
 	// functions
 	@FXML
 	private void createFormation(ActionEvent event){
@@ -1395,22 +1405,22 @@ public class DashboardController implements Initializable  {
 		String Mois=newFormationMois.getText().trim();
 		String Annee=newFormationAnnee.getText().trim();
 		String Participants=newFormationParticipants.getText().trim();
-		int domaineId= DomaineCrud.getDomaineIdByLibelle(cnx, newFormationDomaineCombo.getValue()==null?"":newFormationDomaineCombo.getValue());
-		int formateurId= FormateurCrud.getFormateurIdByName(cnx, newFormationFormateurCombo.getValue()==null?"":newFormationFormateurCombo.getValue());
+		int domaineId= DomaineCrud.getDomaineIdByLibelle(DBconnection, newFormationDomaineCombo.getValue()==null?"":newFormationDomaineCombo.getValue());
+		int formateurId= FormateurCrud.getFormateurIdByName(DBconnection, newFormationFormateurCombo.getValue()==null?"":newFormationFormateurCombo.getValue());
 
 		java.util.Date d=new java.util.Date();
 		int year=d.getYear()+1900;
 
 
 		// verifier les donner saisit par l'utilisateur
-		if(!LogController.isNumber(Jours) || Integer.parseInt(Jours)<0) {
-			formationMessageLabel.setText("Le nombre du jours du nouvel formation néacceptent que des chiffre et doit étre positive!");
-		}else if(!LogController.isNumber(Mois) || Integer.parseInt(Mois)<0 || Integer.parseInt(Mois)>12) {
-			formationMessageLabel.setText("Le mois du nouvel formation néacceptent que des chiffre et doit étre entre 1-12!");
-		}else if(!LogController.isNumber(Annee) || Integer.parseInt(Annee)<0 || Integer.parseInt(Annee)<year) {
-			formationMessageLabel.setText("L'année du nouvel formation néacceptent que des chiffre et doit étre supérieur ou égal é "+year+"!");
-		}else if(!LogController.isNumber(Participants) || Integer.parseInt(Participants)<4) {
-			formationMessageLabel.setText("Le nombre des participants du nouvel formation néacceptent que des chiffre et doit étre plus que 3!");
+		if(!LoginController.isNumber(Jours) || Integer.parseInt(Jours)<0) {
+			formationMessageLabel.setText("Le nombre du jours du nouvel formation n'accepte que des chiffre et doit étre positive!");
+		}else if(!LoginController.isNumber(Mois) || Integer.parseInt(Mois)<0 || Integer.parseInt(Mois)>12) {
+			formationMessageLabel.setText("Le mois du nouvel formation n'accepte que des chiffre et doit étre entre 1-12!");
+		}else if(!LoginController.isNumber(Annee) || Integer.parseInt(Annee)<0 || Integer.parseInt(Annee)<year) {
+			formationMessageLabel.setText("L'année du nouvel formation n'accepte que des chiffre et doit étre supérieur ou égal é "+year+"!");
+		}else if(!LoginController.isNumber(Participants) || Integer.parseInt(Participants)<4) {
+			formationMessageLabel.setText("Le nombre des participants du nouvel formation n'accepte que des chiffre et doit étre plus que 3!");
 		}else if(domaineId==0){
 			formationMessageLabel.setText("Saisir le domaine du nouvel formation!");
 		}else if(formateurId==0){
@@ -1420,7 +1430,7 @@ public class DashboardController implements Initializable  {
 		}else {
 
 
-			String result = formation.createFormation(cnx,Intitule,domaineId,Integer.parseInt(Jours),Integer.parseInt(Annee), Integer.parseInt(Mois),formateurId,Integer.parseInt(Participants));
+			String result = formationCRUD.createFormation(DBconnection,Intitule,domaineId,Integer.parseInt(Jours),Integer.parseInt(Annee), Integer.parseInt(Mois),formateurId,Integer.parseInt(Participants));
 			// verifier si le formation a été ajouté
 			if(result.contains("Le nouvel formation a été ajouté avec succés.")) {
 				formationMessageLabel.setText("Le nouvel formation a été ajouté avec succés.");
@@ -1448,22 +1458,22 @@ public class DashboardController implements Initializable  {
 		String Mois=modifierFormationMois.getText().trim();
 		String Annee=modifierFormationAnnee.getText().trim();
 		String Participants=modifierFormationParticipants.getText().trim();
-		int domaineId= DomaineCrud.getDomaineIdByLibelle(cnx, modifierFormationDomaineCombo.getValue()==null?"":modifierFormationDomaineCombo.getValue());
-		int formateurId= FormateurCrud.getFormateurIdByName(cnx, modifierFormationFormateurCombo.getValue()==null?"":modifierFormationFormateurCombo.getValue());
+		int domaineId= DomaineCrud.getDomaineIdByLibelle(DBconnection, modifierFormationDomaineCombo.getValue()==null?"":modifierFormationDomaineCombo.getValue());
+		int formateurId= FormateurCrud.getFormateurIdByName(DBconnection, modifierFormationFormateurCombo.getValue()==null?"":modifierFormationFormateurCombo.getValue());
 
 		java.util.Date d=new java.util.Date();
 		int year=d.getYear()+1900;
 
 
 		// verifier les donner saisit par l'utilisateur
-		if(!LogController.isNumber(Jours) || Integer.parseInt(Jours)<0) {
-			formationMessageLabel.setText("Le nouvel nombre du jours du formation néacceptent que des chiffre et doit étre positive!");
-		}else if(!LogController.isNumber(Mois) || Integer.parseInt(Mois)<0 || Integer.parseInt(Mois)>12) {
-			formationMessageLabel.setText("Le nouvel mois du formation néacceptent que des chiffre et doit étre entre 1-12!");
-		}else if(!LogController.isNumber(Annee) || Integer.parseInt(Annee)<0 || Integer.parseInt(Annee)<year) {
-			formationMessageLabel.setText("Le nouvel année du formation néacceptent que des chiffre et doit étre supérieur ou égal é "+year+"!");
-		}else if(!LogController.isNumber(Participants) || Integer.parseInt(Participants)<4) {
-			formationMessageLabel.setText("Le nouvel nombre des participants du formation néacceptent que des chiffre et doit étre plus que 3!");
+		if(!LoginController.isNumber(Jours) || Integer.parseInt(Jours)<0) {
+			formationMessageLabel.setText("Le nouvel nombre du jours du formation n'accepte que des chiffre et doit étre positive!");
+		}else if(!LoginController.isNumber(Mois) || Integer.parseInt(Mois)<0 || Integer.parseInt(Mois)>12) {
+			formationMessageLabel.setText("Le nouvel mois du formation n'accepte que des chiffre et doit étre entre 1-12!");
+		}else if(!LoginController.isNumber(Annee) || Integer.parseInt(Annee)<0 || Integer.parseInt(Annee)<year) {
+			formationMessageLabel.setText("Le nouvel année du formation n'accepte que des chiffre et doit étre supérieur ou égal é "+year+"!");
+		}else if(!LoginController.isNumber(Participants) || Integer.parseInt(Participants)<4) {
+			formationMessageLabel.setText("Le nouvel nombre des participants du formation n'accepte que des chiffre et doit étre plus que 3!");
 		}else if(domaineId==0){
 			formationMessageLabel.setText("Saisir le nouvel domaine du formation!");
 		}else if(formateurId==0){
@@ -1473,7 +1483,7 @@ public class DashboardController implements Initializable  {
 		}else {
 
 
-			String result = formation.modifyFormation(cnx,modifierFormationIDCombo.getValue(),Intitule,domaineId,Integer.parseInt(Jours),Integer.parseInt(Annee), Integer.parseInt(Mois),formateurId,Integer.parseInt(Participants));
+			String result = formationCRUD.modifyFormation(DBconnection,modifierFormationIDCombo.getValue(),Intitule,domaineId,Integer.parseInt(Jours),Integer.parseInt(Annee), Integer.parseInt(Mois),formateurId,Integer.parseInt(Participants));
 			// verifier si le formation a été modifée
 			if(result.contains("La formation a été modifié avec succés.")) {
 				formationMessageLabel.setText("La formation a été modifié avec succés.");
@@ -1502,7 +1512,7 @@ public class DashboardController implements Initializable  {
 		// collecter les donner saisit par l'utilisateur
 		int id=deleteFormationIdCombo.getValue();
 
-		String result = formation.deleteFormation(cnx,id);
+		String result = formationCRUD.deleteFormation(DBconnection,id);
 		// verifier si la formation a été ajouté
 		if(result.contains("La formation a été supprimé.")) {
 			formationMessageLabel.setText("La formation a été supprimé.");
@@ -1566,7 +1576,7 @@ public class DashboardController implements Initializable  {
 
 		if(modifierFormationIDCombo.getValue() != null && event.getSource() ==modifierFormationIDCombo) {
 			int id =modifierFormationIDCombo.getValue();
-			FormationModel myformation = formation.getSignleFormationById(cnx, id);
+			FormationModel myformation = formationCRUD.getSignleFormationById(DBconnection, id);
 			modifierFormationIntitule.setText(myformation.getIntitule());
 			modifierFormationJours.setText(myformation.getNombre_jours()+"");
 			modifierFormationMois.setText(myformation.getMois()+"");
@@ -1618,7 +1628,7 @@ public class DashboardController implements Initializable  {
 	public void loadParticipant() {
 		// remplire le tableau
 
-		ArrayList<ParticipantModel> myParticipants = participant.getAllEtudiant(cnx);
+		ArrayList<ParticipantModel> myParticipants = participantCRUD.getAllEtudiant(DBconnection);
 
 		ObservableList<ParticipantModel> participantObservables = FXCollections.observableArrayList() ;
 		participantTable.setItems(participantObservables);
@@ -1631,7 +1641,7 @@ public class DashboardController implements Initializable  {
 
 	public void loadParticipantMatricule() {
 		// remplire comboBox
-		ArrayList<ParticipantModel> myParticipants = participant.getAllEtudiant(cnx);
+		ArrayList<ParticipantModel> myParticipants = participantCRUD.getAllEtudiant(DBconnection);
 
 
 		ObservableList<String> participantObservables = FXCollections.observableArrayList() ;
@@ -1647,7 +1657,7 @@ public class DashboardController implements Initializable  {
 
 	public void loadProfilsLibelles() {
 		// remplire comboBox
-		ArrayList<ProfilModel> myProfils = profil.getAllProfils(cnx);
+		ArrayList<ProfilModel> myProfils = profilCRUD.getAllProfils(DBconnection);
 
 		ObservableList<String> profilsIdsObservables = FXCollections.observableArrayList() ;
 		newParticipantProfilCombo.setItems(profilsIdsObservables);
@@ -1673,17 +1683,17 @@ public class DashboardController implements Initializable  {
 		String mat=newParticipantMatricule.getText().trim();
 		String nom=newParticipantNom.getText().trim();
 		String prenom=newParticipantPrenom.getText().trim();
-		int profilId= ProfilCrud.getParticipantById(cnx, newParticipantProfilCombo.getValue()==null?"":newParticipantProfilCombo.getValue());
+		int profilId= ProfilCrud.getParticipantById(DBconnection, newParticipantProfilCombo.getValue()==null?"":newParticipantProfilCombo.getValue());
 		Date birthday = Date.valueOf(newParticipantDate.getValue().toString());
 
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(nom)) {
-			participantMessageLabel.setText("Le nom du nouvel participant néacceptent que des chaines de caractére!");
-		}else if(LogController.containsNumber(prenom)) {
-			participantMessageLabel.setText("Le prenom du nouvel participant néacceptent que des chaines de caractére!");
-		}else if(!LogController.isNumber(mat) && mat.length()==8) {
-			participantMessageLabel.setText("Le matricule du nouvel participant néacceptent que des chiffres et composée de 8 chiffres!");
+		if(LoginController.containsNumber(nom)) {
+			participantMessageLabel.setText("Le nom du nouvel participant n'accepte que des chaines de caractére!");
+		}else if(LoginController.containsNumber(prenom)) {
+			participantMessageLabel.setText("Le prenom du nouvel participant n'accepte que des chaines de caractére!");
+		}else if(!LoginController.isNumber(mat) && mat.length()==8) {
+			participantMessageLabel.setText("Le matricule du nouvel participant n'accepte que des chiffres et composée de 8 chiffres!");
 		}else if(profilId==0){
 			participantMessageLabel.setText("Saisir le profil du nouvel participant!");
 		}else if(profilId==-1){
@@ -1692,7 +1702,7 @@ public class DashboardController implements Initializable  {
 
 
 		else{
-			String result = participant.createEtudiant(cnx,Integer.parseInt(mat),nom,prenom,profilId,birthday);
+			String result = participantCRUD.createEtudiant(DBconnection,Integer.parseInt(mat),nom,prenom,profilId,birthday);
 			// verifier si l'participant a été ajouté
 			if(result.contains("Le nouvel participant a été ajouté avec succés.")) {
 				participantMessageLabel.setText("Le nouvel participant a été ajouté avec succés.");
@@ -1718,19 +1728,19 @@ public class DashboardController implements Initializable  {
 		String mat=modifierParticipantIdCombo.getValue().trim();
 		String nom=modifierParticipantNom.getText().trim();
 		String prenom=modifierParticipantPrenom.getText().trim();
-		int profilId= ProfilCrud.getParticipantById(cnx, modifierParticipantProfilCombo.getValue()==null?"":modifierParticipantProfilCombo.getValue());
+		int profilId= ProfilCrud.getParticipantById(DBconnection, modifierParticipantProfilCombo.getValue()==null?"":modifierParticipantProfilCombo.getValue());
 		Date birthday = Date.valueOf(modifierParticipantDate.getValue().toString());
 
 
 
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(nom)) {
-			participantMessageLabel.setText("Le nouvel nom du participant a modifier néacceptent que des chaines de caractére!");
-		}else if(LogController.containsNumber(prenom)) {
-			participantMessageLabel.setText("Le prenom du nouvel participant néacceptent que des chaines de caractére!");
-		}else if(!LogController.isNumber(mat) && mat.length()==8) {
-			participantMessageLabel.setText("Le nouvel matricule du participant a modifier néacceptent que des chiffres et composée de 8 chiffres!");
+		if(LoginController.containsNumber(nom)) {
+			participantMessageLabel.setText("Le nouvel nom du participant a modifier n'accepte que des chaines de caractére!");
+		}else if(LoginController.containsNumber(prenom)) {
+			participantMessageLabel.setText("Le prenom du nouvel participant n'accepte que des chaines de caractére!");
+		}else if(!LoginController.isNumber(mat) && mat.length()==8) {
+			participantMessageLabel.setText("Le nouvel matricule du participant a modifier n'accepte que des chiffres et composée de 8 chiffres!");
 		}else if(profilId==0){
 			participantMessageLabel.setText("Saisir le nouvel profil du participant a modifer!");
 		}else if(profilId==-1){
@@ -1740,7 +1750,7 @@ public class DashboardController implements Initializable  {
 
 		else{
 
-			String result = participant.modifyEtudiant(cnx,Integer.parseInt(mat),nom,prenom,profilId,birthday);
+			String result = participantCRUD.modifyEtudiant(DBconnection,Integer.parseInt(mat),nom,prenom,profilId,birthday);
 			// verifier si l'participant a été modifier
 			if(result.contains("L'participant a été modifié avec succés.")) {
 				participantMessageLabel.setText("L'participant a été modifié avec succés.");
@@ -1767,7 +1777,7 @@ public class DashboardController implements Initializable  {
 		// collecter les donner saisit par l'utilisateur
 		int id=Integer.parseInt(deleteParticipantIdCombo.getValue());
 
-		String result = participant.deleteEtudiant(cnx,id);
+		String result = participantCRUD.deleteEtudiant(DBconnection,id);
 		// verifier si l'etudiant a été ajouté
 		if(result.contains("L'participant a été supprimé.")) {
 			participantMessageLabel.setText("L'participant a été supprimé.");
@@ -1830,7 +1840,7 @@ public class DashboardController implements Initializable  {
 
 		if(modifierParticipantIdCombo.getValue() != null && event.getSource() ==modifierParticipantIdCombo) {
 			int id =Integer.parseInt( modifierParticipantIdCombo.getValue() );
-			ParticipantModel myparticipant = ParticipantCrud.getSignleParticipantById(cnx, id);
+			ParticipantModel myparticipant = ParticipantCrud.getSignleParticipantById(DBconnection, id);
 			modifierParticipantNom.setText(myparticipant.getNom());
 			modifierParticipantPrenom.setText(myparticipant.getPrenom());
 			String myDate=myparticipant.getDate_naissance().toString();
@@ -1881,7 +1891,7 @@ public class DashboardController implements Initializable  {
 	private void Logout(ActionEvent event){
 		try {
 			//redirection to another stage
-			URL myURL = new URL(filePath.toString().replace("/dashboard/DashboardScreen.fxml", "/log/LogScreen.fxml"));
+			URL myURL = new URL(filePath.toString().replace("/dashboard/DashboardScreen.fxml", "/log/LoginView.fxml"));
 			Parent root = FXMLLoader.load(myURL);
 			Scene scene = new Scene(root);
 			Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
