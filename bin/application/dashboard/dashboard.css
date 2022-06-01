@@ -37,13 +37,17 @@
 
 .usefulButtons{
     -fx-text-fill: white;
-    -fx-background-radius: 5;
+    
     -fx-font-weight: bold;
     -fx-font-size: 14px;
     -fx-padding: 9 14 9 14;
 	-fx-background-color: #008CBA;
     
     
+}
+
+.btn-center{
+    -fx-text-align: center;
 }
 
 
