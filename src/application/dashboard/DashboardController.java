@@ -839,14 +839,11 @@ public class DashboardController implements Initializable  {
 		profilMessageLabel.setStyle("-fx-background-color:#f93154;");
 		String libelle = profilDeleteLogin.getText().trim().toLowerCase();
 		String result = null;
-		// collecter les donner saisit par l'utilisateur
-		String libelle=profilDeleteLogin.getText().trim().toLowerCase();
-
 		// verifier les donner saisit par l'utilisateur
 		if(LoginController.containsNumber(libelle)) {
 			profilMessageLabel.setText("Le Libelle n'accepte que des chaines de caractére!");
 		}else {
-			String result = profilCRUD.deleteProfil(DBconnection,libelle);
+			result = profilCRUD.deleteProfil(DBconnection,libelle);
 			// verifier si l'utilisateur a été ajouté
 			if(result.contains("Le profil a été supprimé.")) {
 				profilMessageLabel.setText("Le profil a été supprimé.");
@@ -1021,7 +1018,7 @@ public class DashboardController implements Initializable  {
 			alert.setTitle("Suppression D'un Domaine");
 			alert.setHeaderText("Êtes-Vous Sure de Supprimer Ce Domaine ?");
 			if (alert.showAndWait().get() == ButtonType.OK) {
-				result = domaine.deleteDomaine(cnx,libelle);
+				result = domaineCRUD.deleteDomaine(DBconnection,libelle);
 			}
 			if(result.contains("Le domaine a été supprimé.")) {
 				domaineMessageLabel.setText("Le domaine a été supprimé.");
@@ -1092,13 +1089,6 @@ public class DashboardController implements Initializable  {
 
 		ObservableList<FormateurModel> formateurObservables = FXCollections.observableArrayList() ;
 		formateurTable.setItems(formateurObservables);
-		formateurTable.setFixedCellSize(25);
-		if(myFormateurs.size() > 0)
-			formateurTable.prefHeightProperty().bind(formateurTable.fixedCellSizeProperty().multiply(Bindings.size(formateurTable.getItems()).add(1.01)));
-		else
-			formateurTable.prefHeightProperty().bind(formateurTable.fixedCellSizeProperty().multiply(3.01));
-		formateurTable.minHeightProperty().bind(formateurTable.prefHeightProperty());
-		formateurTable.maxHeightProperty().bind(formateurTable.prefHeightProperty());
 		for(int i=0;i<myFormateurs.size();i++) {
 			formateurObservables.add(myFormateurs.get(i));
 
