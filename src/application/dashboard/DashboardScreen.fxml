@@ -460,7 +460,7 @@
                                                    </VBox>
                                                 </children>
                                              </HBox>
-                                             <Label fx:id="domaineMessageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="929.0" style="-fx-alignment: center;" styleClass="errorsLabel" text="Message Logger" textAlignment="CENTER" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS">
+                                             <Label fx:id="domaineMessageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="929.0" style="-fx-alignment: center;" styleClass="errorsLabel" text="Error" textAlignment="CENTER" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS">
                                                 <padding>
                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                 </padding>
@@ -656,7 +656,7 @@
                                                    </VBox>
                                                 </children>
                                              </HBox>
-                                             <Label fx:id="userCreationLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="929.0" style="-fx-alignment: center;" styleClass="errorsLabel" text="Message Logger" textAlignment="CENTER" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS">
+                                             <Label fx:id="userCreationLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="929.0" style="-fx-alignment: center;" styleClass="errorsLabel" text="Error" textAlignment="CENTER" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS">
                                                 <padding>
                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                 </padding>
@@ -923,7 +923,7 @@
                                                    </VBox>
                                                 </children>
                                              </HBox>
-                                             <Label fx:id="participantMessageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="929.0" style="-fx-alignment: center;" styleClass="errorsLabel" text="Message Logger" textAlignment="CENTER" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS">
+                                             <Label fx:id="participantMessageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="929.0" style="-fx-alignment: center;" styleClass="errorsLabel" text="Error" textAlignment="CENTER" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS">
                                                 <padding>
                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                 </padding>
@@ -1197,7 +1197,7 @@
                                                    </VBox>
                                                 </children>
                                              </HBox>
-                                             <Label fx:id="formateurMessageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="929.0" style="-fx-alignment: center;" styleClass="errorsLabel" text="Message Logger" textAlignment="CENTER" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS">
+                                             <Label fx:id="formateurMessageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="929.0" style="-fx-alignment: center;" styleClass="errorsLabel" text="Error" textAlignment="CENTER" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS">
                                                 <padding>
                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                 </padding>
@@ -1373,7 +1373,7 @@
                                                    </VBox>
                                                 </children>
                                              </HBox>
-                                             <Label fx:id="profilMessageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="929.0" style="-fx-alignment: center;" styleClass="errorsLabel" text="Message Logger" textAlignment="CENTER" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS">
+                                             <Label fx:id="profilMessageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="929.0" style="-fx-alignment: center;" styleClass="errorsLabel" text="Error" textAlignment="CENTER" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS">
                                                 <padding>
                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                 </padding>
@@ -1646,7 +1646,7 @@
                                                    </VBox>
                                                 </children>
                                              </HBox>
-                                             <Label fx:id="formateurMessageLabel1" alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="929.0" style="-fx-alignment: center;" styleClass="errorsLabel" text="Message Logger" textAlignment="CENTER" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS">
+                                             <Label fx:id="formateurMessageLabel1" alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="929.0" style="-fx-alignment: center;" styleClass="errorsLabel" text="Error" textAlignment="CENTER" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS">
                                                 <padding>
                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                 </padding>
@@ -1973,7 +1973,7 @@
                                                    </VBox>
                                                 </children>
                                              </HBox>
-                                             <Label fx:id="formationMessageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="929.0" style="-fx-alignment: center;" styleClass="errorsLabel" text="Message Logger" textAlignment="CENTER" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS">
+                                             <Label fx:id="formationMessageLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="929.0" style="-fx-alignment: center;" styleClass="errorsLabel" text="Error" textAlignment="CENTER" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS">
                                                 <padding>
                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                                 </padding>
