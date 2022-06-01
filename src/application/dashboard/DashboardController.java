@@ -21,7 +21,7 @@ import application.Models.FormationModel;
 import application.Models.ParticipantModel;
 import application.Models.ProfilModel;
 import application.Models.UserModel;
-import application.log.LogController;
+import application.log.LoginController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -465,7 +465,7 @@ public class DashboardController implements Initializable  {
 		loadAll();
 
 		// update menu on role
-		if(LogController.role =="user") {
+		if(LoginController.role =="user") {
 			menu.getChildren().remove(UsersButtonHolder);
 			windowTitle.setText("Profils");
 			profilsPane.toFront();
@@ -598,7 +598,7 @@ public class DashboardController implements Initializable  {
 		String name=newName.getText().trim();
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(login)) {
+		if(LoginController.containsNumber(login)) {
 			userCreationLabel.setText("Login n'accepte que des chaines de caractére!");
 		}else if(userCRUD.getUserByLog(DBconnection, login)){
 			userCreationLabel.setText("Login est deja existe!");
@@ -632,7 +632,7 @@ public class DashboardController implements Initializable  {
 
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(login)) {
+		if(LoginController.containsNumber(login)) {
 			userCreationLabel.setText("Login n'accepte que des chaines de caractére!");
 		}else if(userIdsCombo.getValue()==null) {
 			userCreationLabel.setText("Sélectionner l'identifiant du utilisateur é modifier!");
@@ -667,7 +667,7 @@ public class DashboardController implements Initializable  {
 		String login=userDeleteLogin.getText().trim();
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(login)) {
+		if(LoginController.containsNumber(login)) {
 			userCreationLabel.setText("Login n'accepte que des chaines de caractére!");
 		}else {
 
@@ -774,7 +774,7 @@ public class DashboardController implements Initializable  {
 		String libelle=newProfil.getText().trim().toLowerCase();
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(libelle)) {
+		if(LoginController.containsNumber(libelle)) {
 			profilMessageLabel.setText("Le Libelle du nouvel profil n'accepte que des chaines de caractére!");
 		}else if(profilCRUD.getProfilByLibelle(DBconnection, libelle)){
 			profilMessageLabel.setText("Le Profile est deja existe!");
@@ -806,7 +806,7 @@ public class DashboardController implements Initializable  {
 		String libelle=profilModifyLibelle.getText().trim().toLowerCase();
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(libelle)) {
+		if(LoginController.containsNumber(libelle)) {
 			profilMessageLabel.setText("Le Libelle n'accepte que des chaines de caractére!");
 		}else if(profilIdsCombo.getValue()==null) {
 			profilMessageLabel.setText("Sélectionner l'identifiant du profil é modifier!");
@@ -843,7 +843,7 @@ public class DashboardController implements Initializable  {
 		String libelle=profilDeleteLogin.getText().trim().toLowerCase();
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(libelle)) {
+		if(LoginController.containsNumber(libelle)) {
 			profilMessageLabel.setText("Le Libelle n'accepte que des chaines de caractére!");
 		}else {
 			String result = profilCRUD.deleteProfil(DBconnection,libelle);
@@ -945,7 +945,7 @@ public class DashboardController implements Initializable  {
 		String libelle=newDomaine.getText().trim().toLowerCase();
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(libelle)) {
+		if(LoginController.containsNumber(libelle)) {
 			domaineMessageLabel.setText("Le Libelle du nouvel domaine n'accepte que des chaines de caractére!");
 		}else if(domaineCRUD.getDomaineByLibelle(DBconnection, libelle)){
 			domaineMessageLabel.setText("Le Domaine est deja existe!");
@@ -975,7 +975,7 @@ public class DashboardController implements Initializable  {
 		String libelle=domaineModifyLibelle.getText().trim().toLowerCase();
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(libelle)) {
+		if(LoginController.containsNumber(libelle)) {
 			domaineMessageLabel.setText("Le Libelle n'accepte que des chaines de caractére!");
 		}else if(domaineIdsCombo.getValue()==null) {
 			domaineMessageLabel.setText("Sélectionner l'identifiant du domaine é modifier!");
@@ -1014,7 +1014,7 @@ public class DashboardController implements Initializable  {
 		String libelle=domaineDeleteLogin.getText().trim().toLowerCase();
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(libelle)) {
+		if(LoginController.containsNumber(libelle)) {
 			domaineMessageLabel.setText("Le Libelle n'accepte que des chaines de caractére!");
 		}else {
 			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -1157,15 +1157,15 @@ public class DashboardController implements Initializable  {
 		int domaineId= domaineCRUD.getDomaineIdByLibelle(DBconnection, newFormateurDomaineCombo.getValue()==null?"":newFormateurDomaineCombo.getValue());
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(nom)) {
+		if(LoginController.containsNumber(nom)) {
 			formateurMessageLabel.setText("Le nom du nouvel instructeur n'accepte que des chaines de caractére!");
-		}else if(LogController.containsNumber(prenom)) {
+		}else if(LoginController.containsNumber(prenom)) {
 			formateurMessageLabel.setText("Le prenom du nouvel instructeur n'accepte que des chaines de caractére!");
-		}else if(!LogController.isNumber(telephone)) {
+		}else if(!LoginController.isNumber(telephone)) {
 			formateurMessageLabel.setText("Le numero du telephone du nouvel instructeur n'accepte que des chiffre!");
 		}else if(telephone.length() != 8) {
 			formateurMessageLabel.setText("Le numero du telephone du nouvel instructeur doit étre composée de 8 chiffre!");
-		}else if(!LogController.isEmail(email)) {
+		}else if(!LoginController.isEmail(email)) {
 			formateurMessageLabel.setText("E-mail non valide!");
 		}else if(domaineId==0){
 			formateurMessageLabel.setText("Saisir le domaine du nouvel instructeur!");
@@ -1205,15 +1205,15 @@ public class DashboardController implements Initializable  {
 
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(nom)) {
+		if(LoginController.containsNumber(nom)) {
 			formateurMessageLabel.setText("Le nouvel nom d'instructeur n'accepte que des chaines de caractére!");
-		}else if(LogController.containsNumber(prenom)) {
+		}else if(LoginController.containsNumber(prenom)) {
 			formateurMessageLabel.setText("Le nouvel prenom d'instructeur n'accepte que des chaines de caractére!");
-		}else if(!LogController.isNumber(telephone)) {
+		}else if(!LoginController.isNumber(telephone)) {
 			formateurMessageLabel.setText("Le nouvel numero du telephone d'instructeur n'accepte que des chiffre!");
 		}else if(telephone.length() != 8) {
 			formateurMessageLabel.setText("Le nouvel numero du telephone d'instructeur doit étre composée de 8 chiffre!");
-		}else if(!LogController.isEmail(email)) {
+		}else if(!LoginController.isEmail(email)) {
 			formateurMessageLabel.setText("Le nouvel E-mail non valide!");
 		}else if(domaineId==0){
 			formateurMessageLabel.setText("Saisir le domaine d'instructeur!");
@@ -1423,13 +1423,13 @@ public class DashboardController implements Initializable  {
 
 
 		// verifier les donner saisit par l'utilisateur
-		if(!LogController.isNumber(Jours) || Integer.parseInt(Jours)<0) {
+		if(!LoginController.isNumber(Jours) || Integer.parseInt(Jours)<0) {
 			formationMessageLabel.setText("Le nombre du jours du nouvel formation n'accepte que des chiffre et doit étre positive!");
-		}else if(!LogController.isNumber(Mois) || Integer.parseInt(Mois)<0 || Integer.parseInt(Mois)>12) {
+		}else if(!LoginController.isNumber(Mois) || Integer.parseInt(Mois)<0 || Integer.parseInt(Mois)>12) {
 			formationMessageLabel.setText("Le mois du nouvel formation n'accepte que des chiffre et doit étre entre 1-12!");
-		}else if(!LogController.isNumber(Annee) || Integer.parseInt(Annee)<0 || Integer.parseInt(Annee)<year) {
+		}else if(!LoginController.isNumber(Annee) || Integer.parseInt(Annee)<0 || Integer.parseInt(Annee)<year) {
 			formationMessageLabel.setText("L'année du nouvel formation n'accepte que des chiffre et doit étre supérieur ou égal é "+year+"!");
-		}else if(!LogController.isNumber(Participants) || Integer.parseInt(Participants)<4) {
+		}else if(!LoginController.isNumber(Participants) || Integer.parseInt(Participants)<4) {
 			formationMessageLabel.setText("Le nombre des participants du nouvel formation n'accepte que des chiffre et doit étre plus que 3!");
 		}else if(domaineId==0){
 			formationMessageLabel.setText("Saisir le domaine du nouvel formation!");
@@ -1476,13 +1476,13 @@ public class DashboardController implements Initializable  {
 
 
 		// verifier les donner saisit par l'utilisateur
-		if(!LogController.isNumber(Jours) || Integer.parseInt(Jours)<0) {
+		if(!LoginController.isNumber(Jours) || Integer.parseInt(Jours)<0) {
 			formationMessageLabel.setText("Le nouvel nombre du jours du formation n'accepte que des chiffre et doit étre positive!");
-		}else if(!LogController.isNumber(Mois) || Integer.parseInt(Mois)<0 || Integer.parseInt(Mois)>12) {
+		}else if(!LoginController.isNumber(Mois) || Integer.parseInt(Mois)<0 || Integer.parseInt(Mois)>12) {
 			formationMessageLabel.setText("Le nouvel mois du formation n'accepte que des chiffre et doit étre entre 1-12!");
-		}else if(!LogController.isNumber(Annee) || Integer.parseInt(Annee)<0 || Integer.parseInt(Annee)<year) {
+		}else if(!LoginController.isNumber(Annee) || Integer.parseInt(Annee)<0 || Integer.parseInt(Annee)<year) {
 			formationMessageLabel.setText("Le nouvel année du formation n'accepte que des chiffre et doit étre supérieur ou égal é "+year+"!");
-		}else if(!LogController.isNumber(Participants) || Integer.parseInt(Participants)<4) {
+		}else if(!LoginController.isNumber(Participants) || Integer.parseInt(Participants)<4) {
 			formationMessageLabel.setText("Le nouvel nombre des participants du formation n'accepte que des chiffre et doit étre plus que 3!");
 		}else if(domaineId==0){
 			formationMessageLabel.setText("Saisir le nouvel domaine du formation!");
@@ -1698,11 +1698,11 @@ public class DashboardController implements Initializable  {
 
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(nom)) {
+		if(LoginController.containsNumber(nom)) {
 			participantMessageLabel.setText("Le nom du nouvel participant n'accepte que des chaines de caractére!");
-		}else if(LogController.containsNumber(prenom)) {
+		}else if(LoginController.containsNumber(prenom)) {
 			participantMessageLabel.setText("Le prenom du nouvel participant n'accepte que des chaines de caractére!");
-		}else if(!LogController.isNumber(mat) && mat.length()==8) {
+		}else if(!LoginController.isNumber(mat) && mat.length()==8) {
 			participantMessageLabel.setText("Le matricule du nouvel participant n'accepte que des chiffres et composée de 8 chiffres!");
 		}else if(profilId==0){
 			participantMessageLabel.setText("Saisir le profil du nouvel participant!");
@@ -1745,11 +1745,11 @@ public class DashboardController implements Initializable  {
 
 
 		// verifier les donner saisit par l'utilisateur
-		if(LogController.containsNumber(nom)) {
+		if(LoginController.containsNumber(nom)) {
 			participantMessageLabel.setText("Le nouvel nom du participant a modifier n'accepte que des chaines de caractére!");
-		}else if(LogController.containsNumber(prenom)) {
+		}else if(LoginController.containsNumber(prenom)) {
 			participantMessageLabel.setText("Le prenom du nouvel participant n'accepte que des chaines de caractére!");
-		}else if(!LogController.isNumber(mat) && mat.length()==8) {
+		}else if(!LoginController.isNumber(mat) && mat.length()==8) {
 			participantMessageLabel.setText("Le nouvel matricule du participant a modifier n'accepte que des chiffres et composée de 8 chiffres!");
 		}else if(profilId==0){
 			participantMessageLabel.setText("Saisir le nouvel profil du participant a modifer!");
@@ -1901,7 +1901,7 @@ public class DashboardController implements Initializable  {
 	private void Logout(ActionEvent event){
 		try {
 			//redirection to another stage
-			URL myURL = new URL(filePath.toString().replace("/dashboard/DashboardScreen.fxml", "/log/LogScreen.fxml"));
+			URL myURL = new URL(filePath.toString().replace("/dashboard/DashboardScreen.fxml", "/log/LoginView.fxml"));
 			Parent root = FXMLLoader.load(myURL);
 			Scene scene = new Scene(root);
 			Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();

@@ -54,7 +54,7 @@ public class Main extends Application {
             	   stage.close();
             	   
             	   try {
-					root = FXMLLoader.load(getClass().getResource("log/LogScreen.fxml"));
+					root = FXMLLoader.load(getClass().getResource("log/LoginView.fxml"));
 					scene = new Scene(root);
 					stage.setScene(scene);
 	            	stage.show();

@@ -28,7 +28,7 @@ import javafx.util.Duration;
 import javafx.event.ActionEvent;
 import java.io.IOException;
 
-public class LogController implements Initializable {
+public class LoginController implements Initializable {
 
 	
 	private DataBase db;
@@ -112,11 +112,12 @@ public class LogController implements Initializable {
     	
     	loginError.setVisible(true);
     	loginError.setStyle("-fx-background-color:#f93154;");
+		signInButton.setDisable(true);
+
     	UtilisateurCrud userCRUD = new UtilisateurCrud();
     	// collecter les donner saisit par l'utilisateur
     	String login=signInName.getText().trim();
     	String password=signInPassword.getText().trim();
-		
 		
 		// verifier si le login et le mot de passe sont correct
 			String result = userCRUD.signIn(DBConnection,login,password);
@@ -127,7 +128,7 @@ public class LogController implements Initializable {
 					//redirection to another stage
 					String userName = userCRUD.getUserNameByLogin(DBConnection, login);
 					DashboardController.setLoggedUser(userName);
-					URL myURL = new URL(filePath.toString().replace("/log/LogScreen.fxml","/dashboard/DashboardScreen.fxml"));
+					URL myURL = new URL(filePath.toString().replace("/log/LoginView.fxml","/dashboard/DashboardScreen.fxml"));
 					Parent root = FXMLLoader.load(myURL);
 					Scene scene = new Scene(root);
 					Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -137,18 +138,12 @@ public class LogController implements Initializable {
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					signInButton.setDisable(false);
 				}
 			}else {
 				loginError.setText(result);
-				
+				signInButton.setDisable(false);
 			}
-			
-		//}
-		
-		
-		
-		
-		
     }
     
 
@@ -240,7 +235,7 @@ public class LogController implements Initializable {
 				try {
 					//redirection to another stage
 					DashboardController.setLoggedUser(name);
-					URL myURL = new URL(filePath.toString().replace("/log/LogScreen.fxml","/dashboard/DashboardScreen.fxml"));
+					URL myURL = new URL(filePath.toString().replace("/log/LoginView.fxml","/dashboard/DashboardScreen.fxml"));
 					Parent root = FXMLLoader.load(myURL);
 					Scene scene = new Scene(root);
 					Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
