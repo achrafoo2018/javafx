@@ -37,7 +37,7 @@
                         <Insets top="20.0" />
                      </VBox.margin>
                   </ImageView>
-            <Label prefHeight="11.0" prefWidth="273.0" style="-fx-alignment: center;" text="Gestion De Formation" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+            <Label prefHeight="11.0" prefWidth="273.0" style="-fx-alignment: center;"  textAlignment="CENTER" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="Segoe Print Bold" size="20.0" />
                </font>
@@ -238,7 +238,7 @@
                               <Rectangle2D />
                            </viewport>
                         </ImageView>
-                     <Button fx:id="logout" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#changeWindow" prefHeight="40.0" prefWidth="209.0" styleClass="menuItem" text="Logout" textFill="WHITE">
+                     <Button  alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#Logout" prefHeight="40.0" prefWidth="209.0" styleClass="menuItem" text="Logout" textFill="WHITE">
                         <font>
                            <Font name="System Bold" size="16.0" />
                         </font>
@@ -285,6 +285,9 @@
                </HBox>
                </children>
             </VBox>
+
+
+
             <Button layoutX="1174.0" mnemonicParsing="false" onAction="#exit" prefHeight="50.0" prefWidth="50.0" styleClass="exitbutton" text="X" textFill="WHITE">
                <font>
                   <Font name="Arial Bold" size="18.0" />
@@ -297,17 +300,15 @@
             </padding>
             </Button>
          
-      <HBox alignment="BOTTOM_CENTER" layoutX="528.0" layoutY="-24.0" prefHeight="76.0" prefWidth="293.0" styleClass="menuHolder">
+      <HBox layoutX="528.0" layoutY="-24.0"  >
          <children>
-               <Label fx:id="windowTitle" prefHeight="11.0" prefWidth="273.0" style="-fx-alignment: center;" text="Utilisateurs" textAlignment="CENTER" textFill="WHITE">
+               <Label fx:id="windowTitle"  textFill="WHITE">
                   <font>
-                     <Font name="Segoe Print Bold" size="20.0" />
+                     <Font name="Segoe Print Bold" />
                   </font>
                </Label>
          </children>
-         <padding>
-            <Insets bottom="7.0" left="10.0" right="10.0" />
-         </padding>
+
       </HBox>
          <StackPane layoutX="265.0" layoutY="60.0">
             <children>
@@ -328,7 +329,7 @@
                                     <children>
                                        <TableView fx:id="domaineTable" minHeight="354.0" prefHeight="500.0" prefWidth="889.0" GridPane.rowIndex="1">
                                           <columns>
-                                             <TableColumn fx:id="domaineIDColumn" prefWidth="75.0" text="ID Profil" />
+                                             <TableColumn fx:id="domaineIDColumn" prefWidth="58.0" text="ID Profil" />
                                              <TableColumn fx:id="domaineLibelleColumn" prefWidth="75.0" text="Libelle" />
                                           </columns>
                                           <columnResizePolicy>
@@ -952,11 +953,11 @@
                </Pane>
                <Pane fx:id="formateurPane">
                   <children>
-                     <VBox prefHeight="589.0" prefWidth="949.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #FFFFFF;">
+                     <VBox prefHeight="958.0" prefWidth="949.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #FFFFFF;">
                         <children>
                            <ScrollPane style="-fx-background-color: transparent;">
                               <content>
-                                 <GridPane prefHeight="1000.0" prefWidth="881.0">
+                                 <GridPane prefHeight="2000.0" prefWidth="881.0">
                                     <columnConstraints>
                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                     </columnConstraints>
@@ -965,9 +966,48 @@
                                        <RowConstraints maxHeight="548.0" minHeight="0.0" prefHeight="447.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                       <TableView fx:id="formateurTable" minHeight="354.0" prefHeight="500.0" prefWidth="881.0" GridPane.rowIndex="1">
+
+                                       <HBox layoutX="528.0" layoutY="-24.0" prefHeight="76.0" prefWidth="293.0" >
+                                          <children>
+                                             <Label  text="Liste des formateurs" textFill="Black">
+                                                <font>
+                                                   <Font name="Sans-serif" size="30.0" />
+                                                </font>
+                                             </Label>
+                                          </children>
+                                          <padding>
+                                             <Insets bottom="7.0" left="10.0" right="7.0" />
+                                          </padding>
+                                       </HBox>
+
+                                       <HBox  layoutX="628.0" layoutY="-24.0">
+                                          <children>
+                                             <ComboBox fx:id="deleteFormateurIdCombo" onAction="#deleteFormateurButtonActivation" minWidth="60.0" promptText="Id">
+                                                <opaqueInsets>
+                                                   <Insets />
+                                                </opaqueInsets>
+                                                <HBox.margin>
+                                                   <Insets bottom="10.0" top="50.0" left="10.0"/>
+                                                </HBox.margin>
+                                                <padding>
+                                                   <Insets   top="10.0" />
+                                                </padding>
+                                             </ComboBox>
+                                             <Button fx:id="deleteFormateurButton" disable="true" mnemonicParsing="false" onAction="#deleteFormateur" prefHeight="40.0" prefWidth="117.0" styleClass="dangerButtons" text="Supprimer">
+                                                <HBox.margin>
+                                                   <Insets left="720.0" top="50.0" />
+                                                </HBox.margin>
+                                                <cursor>
+                                                   <Cursor fx:constant="HAND" />
+                                                </cursor>
+
+                                             </Button>
+                                          </children>
+
+                                       </HBox>
+                                       <TableView fx:id="formateurTable"  minHeight="150.0" prefHeight="300.0" prefWidth="881.0" >
                                           <columns>
-                                             <TableColumn fx:id="formateurIDColumn" prefWidth="75.0" text="ID" />
+                                             <TableColumn fx:id="formateurIDColumn" prefWidth="75.0"  text="ID" />
                                              <TableColumn fx:id="formateurNomColumn" prefWidth="75.0" text="Nom" />
                                              <TableColumn fx:id="formateurPrenomColumn" prefWidth="291.0" text="Prénom" />
                                              <TableColumn fx:id="formateurDomaineColumn" prefWidth="291.0" text="Domaine" />
@@ -978,21 +1018,22 @@
                                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                           </columnResizePolicy>
                                           <GridPane.margin>
-                                             <Insets left="15.0" right="-15.0" />
+                                             <Insets left="15.0" top="97.0"  right="-15.0" />
                                           </GridPane.margin>
 
                                        </TableView>
-                                       <VBox prefHeight="392.0" prefWidth="916.0">
+
+                                       <VBox GridPane.rowIndex="1" prefHeight="500.0" prefWidth="1000.0">
                                           <children>
-                                             <Label text="Ajouter un instructeur:" textFill="#ff4444">
+                                             <Label text="Ajouter un formateur" textFill="#17202A">
                                                 <font>
-                                                   <Font name="Comic Sans MS Bold" size="25.0" />
+                                                   <Font name="normal" size="25.0" />
                                                 </font>
                                                 <VBox.margin>
-                                                   <Insets top="5.0" />
+                                                   <Insets top="210.0" bottom="10.0" />
                                                 </VBox.margin>
                                              </Label>
-                                             <HBox alignment="CENTER" prefHeight="128.0" prefWidth="799.0">
+                                             <HBox  alignment="CENTER" prefHeight="128.0" prefWidth="799.0">
                                                 <children>
                                                    <VBox prefHeight="116.0" prefWidth="907.0" HBox.hgrow="ALWAYS">
                                                       <children>
@@ -1000,196 +1041,351 @@
                                                             <children>
                                                                <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
                                                                   <children>
+
                                                                      <HBox VBox.vgrow="ALWAYS">
                                                                         <children>
-                                                                           <TextField fx:id="newFormateurNom" onKeyTyped="#createInstructerButtonActivation" promptText="Nom du nouvel Instructeur" styleClass="tf_box" HBox.hgrow="ALWAYS">
+                                                                           <Label text="Nom" textFill="#566573">
                                                                               <font>
-                                                                                 <Font size="16.0" />
+                                                                                 <Font name="normal" size="18.0" />
                                                                               </font>
-                                                                           </TextField>
-                                                                           <TextField fx:id="newFormateurPrenom" onKeyTyped="#createInstructerButtonActivation" promptText="Prénom du nouvel Instructeur" styleClass="tf_box" HBox.hgrow="ALWAYS">
+                                                                              <VBox.margin>
+                                                                                 <Insets top="50.0" />
+                                                                              </VBox.margin>
+
+
+                                                                           </Label>
+                                                                           <TextField fx:id="newFormateurNom" onKeyTyped="#createInstructerButtonActivation"  styleClass="tf_box" HBox.hgrow="ALWAYS">
                                                                               <font>
-                                                                                 <Font size="16.0" />
+                                                                                 <Font size="14.0" />
                                                                               </font>
                                                                               <HBox.margin>
-                                                                                 <Insets bottom="10.0" left="10.0" />
+                                                                                 <Insets bottom="10.0"  left="115.0" right="300.0"/>
+                                                                              </HBox.margin>
+
+                                                                           </TextField>
+
+                                                                        </children>
+                                                                     </HBox>
+
+
+                                                                     <HBox VBox.vgrow="ALWAYS">
+                                                                        <children>
+                                                                           <Label text="Prénom" textFill="#566573">
+                                                                              <font>
+                                                                                 <Font name="normal" size="18.0" />
+                                                                              </font>
+                                                                              <VBox.margin>
+                                                                                 <Insets top="19.0" />
+                                                                              </VBox.margin>
+
+                                                                           </Label>
+                                                                           <TextField fx:id="newFormateurPrenom" onKeyTyped="#createInstructerButtonActivation" styleClass="tf_box" HBox.hgrow="ALWAYS">
+                                                                              <font>
+                                                                                 <Font size="14.0" />
+                                                                              </font>
+                                                                              <HBox.margin>
+                                                                                 <Insets bottom="10.0" left="91.0" right="300.0"/>
                                                                               </HBox.margin>
                                                                            </TextField>
                                                                         </children>
                                                                      </HBox>
+
+
                                                                      <HBox>
                                                                         <children>
-                                                                           <ComboBox fx:id="newFormateurDomaineCombo" prefHeight="25.0" prefWidth="743.0" promptText="Domaine">
+                                                                           <Label text="Email" textFill="#566573">
+                                                                              <font>
+                                                                                 <Font name="normal" size="18.0" />
+                                                                              </font>
+                                                                              <VBox.margin>
+                                                                                 <Insets top="19.0" />
+                                                                              </VBox.margin>
+
+                                                                           </Label>
+                                                                           <TextField fx:id="newFormateurEmail" onKeyTyped="#createInstructerButtonActivation" styleClass="tf_box" HBox.hgrow="ALWAYS">
+                                                                              <font>
+                                                                                 <Font size="14.0" />
+                                                                              </font>
+                                                                              <HBox.margin>
+                                                                                 <Insets bottom="10.0" left="110.0" right="300.0"/>
+                                                                              </HBox.margin>
+                                                                           </TextField>
+
+                                                                        </children>
+                                                                     </HBox>
+
+                                                                     <HBox>
+
+                                                                        <children>
+                                                                           <Label text="N° Téléphone" textFill="#566573">
+                                                                              <font>
+                                                                                 <Font name="normal" size="18.0" />
+                                                                              </font>
+                                                                              <VBox.margin>
+                                                                                 <Insets top="19.0" />
+                                                                              </VBox.margin>
+
+                                                                           </Label>
+                                                                           <TextField fx:id="newFormateurTelephone" onKeyTyped="#createInstructerButtonActivation"  styleClass="tf_box" HBox.hgrow="ALWAYS">
+                                                                              <font>
+                                                                                 <Font size="14.0" />
+                                                                              </font>
+                                                                              <HBox.margin>
+                                                                                 <Insets bottom="10.0" left="39.0" right="300.0"/>
+                                                                              </HBox.margin>
+                                                                           </TextField>
+                                                                        </children>
+                                                                     </HBox>
+
+                                                                     <HBox>
+                                                                        <Label text="Domaine" textFill="#566573">
+                                                                           <font>
+                                                                              <Font name="normal" size="18.0" />
+                                                                           </font>
+                                                                           <padding>
+                                                                              <Insets top="8.0" />
+                                                                           </padding>
+
+                                                                        </Label>
+                                                                        <children>
+                                                                           <ComboBox fx:id="newFormateurDomaineCombo" promptText="Sélectionnez un domaine"  >
                                                                               <opaqueInsets>
                                                                                  <Insets />
                                                                               </opaqueInsets>
                                                                               <HBox.margin>
-                                                                                 <Insets bottom="10.0" />
+                                                                                 <Insets bottom="10.0" top="10.0" right="8.0" left="170"/>
                                                                               </HBox.margin>
                                                                               <padding>
                                                                                  <Insets bottom="2.0" right="2.0" top="2.0" />
+
                                                                               </padding>
                                                                            </ComboBox>
                                                                         </children>
                                                                      </HBox>
+
                                                                      <HBox>
+
                                                                         <children>
-                                                                           <TextField fx:id="newFormateurEmail" onKeyTyped="#createInstructerButtonActivation" promptText="Email du nouvel Instructeur" styleClass="tf_box" HBox.hgrow="ALWAYS">
-                                                                              <font>
-                                                                                 <Font size="16.0" />
-                                                                              </font>
-                                                                           </TextField>
-                                                                           <TextField fx:id="newFormateurTelephone" onKeyTyped="#createInstructerButtonActivation" promptText="N° Téléphone du nouvel Instructeur" styleClass="tf_box" HBox.hgrow="ALWAYS">
-                                                                              <font>
-                                                                                 <Font size="16.0" />
-                                                                              </font>
+                                                                           <Button fx:id="createFormateurButton" disable="true" mnemonicParsing="false" onAction="#createFormateur" prefHeight="40.0" prefWidth="117.0"  styleClass="usefulButtons" text="Ajouter">
                                                                               <HBox.margin>
-                                                                                 <Insets bottom="10.0" left="10.0" />
+                                                                                 <Insets left="480.0" top="15" />
                                                                               </HBox.margin>
-                                                                           </TextField>
+                                                                              <cursor>
+                                                                                 <Cursor fx:constant="HAND" />
+                                                                              </cursor>
+                                                                           </Button>
                                                                         </children>
                                                                      </HBox>
+
+
                                                                   </children>
                                                                </VBox>
-                                                               <Button fx:id="createFormateurButton" disable="true" mnemonicParsing="false" onAction="#createFormateur" prefHeight="40.0" prefWidth="117.0" styleClass="usefulButtons" text="Créer">
-                                                                  <HBox.margin>
-                                                                     <Insets left="15.0" />
-                                                                  </HBox.margin>
-                                                                  <cursor>
-                                                                     <Cursor fx:constant="HAND" />
-                                                                  </cursor>
-                                                               </Button>
+
                                                             </children>
                                                             <padding>
                                                                <Insets right="10.0" />
                                                             </padding>
                                                          </HBox>
-                                                         <Line endX="790.2929077148438" startX="-93.0" stroke="#495bed" strokeLineCap="ROUND" strokeWidth="2.0" VBox.vgrow="ALWAYS" />
-                                                         <Label text="Modifier un instructeur:" textFill="#ff4444">
+
+
+
+
+
+
+
+
+
+
+
+                                                         <Label text="Modifier un formateur" textFill="#17202A">
                                                             <font>
-                                                               <Font name="Comic Sans MS Bold" size="25.0" />
+                                                               <Font name="normal" size="25.0" />
                                                             </font>
                                                             <VBox.margin>
-                                                               <Insets top="5.0" />
+                                                               <Insets top="20.0" />
                                                             </VBox.margin>
                                                          </Label>
-                                                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                                         <HBox alignment="CENTER" prefHeight="300.0" prefWidth="200.0">
                                                             <children>
                                                                <VBox alignment="CENTER" prefHeight="131.0" prefWidth="743.0">
                                                                   <children>
+
                                                                      <HBox>
                                                                         <children>
-                                                                           <ComboBox fx:id="modifierFormateurIdCombo" onAction="#modifyFormateurButtonActivationAction" prefHeight="25.0" prefWidth="743.0" promptText="ID d'instructeur à modifier">
-                                                                              <opaqueInsets>
-                                                                                 <Insets />
-                                                                              </opaqueInsets>
-                                                                              <padding>
-                                                                                 <Insets bottom="2.0" right="2.0" top="2.0" />
-                                                                              </padding>
-                                                                           </ComboBox>
-                                                                           <ComboBox fx:id="modifierFormateurDomaineCombo" onAction="#modifyFormateurButtonActivationAction" prefHeight="25.0" prefWidth="743.0" promptText="Nouvel domaine d'instructeur">
+                                                                        <Label text="Id" textFill="#566573">
+                                                                           <font>
+                                                                              <Font name="normal" size="18.0" />
+                                                                           </font>
+                                                                           <padding>
+                                                                              <Insets top="8.0" />
+                                                                           </padding>
+
+                                                                        </Label>
+
+                                                                           <ComboBox fx:id="modifierFormateurIdCombo" onAction="#modifyFormateurButtonActivationAction" promptText="Sélectionnez l'Id du formateur à modifier">
                                                                               <opaqueInsets>
                                                                                  <Insets />
                                                                               </opaqueInsets>
                                                                               <HBox.margin>
-                                                                                 <Insets bottom="10.0" left="10.0" />
+                                                                                 <Insets bottom="10.0" top="10.0" right="8.0" left="170"/>
                                                                               </HBox.margin>
                                                                               <padding>
                                                                                  <Insets bottom="2.0" right="2.0" top="2.0" />
+
                                                                               </padding>
                                                                            </ComboBox>
+
+
                                                                         </children>
                                                                      </HBox>
+
+
                                                                      <HBox VBox.vgrow="ALWAYS">
                                                                         <children>
-                                                                           <TextField fx:id="modifierFormateurNom" onKeyTyped="#modifyFormateurButtonActivation" promptText="Nouvel nom d'instructeur" styleClass="tf_box" HBox.hgrow="ALWAYS">
+                                                                           <Label text="Nom" textFill="#566573">
                                                                               <font>
-                                                                                 <Font size="16.0" />
+                                                                                 <Font name="normal" size="18.0" />
                                                                               </font>
-                                                                           </TextField>
-                                                                           <TextField fx:id="modifierFormateurPrenom" onKeyTyped="#modifyFormateurButtonActivation" promptText="Nouvel prénom d'instructeur" styleClass="tf_box" HBox.hgrow="ALWAYS">
+                                                                              <padding>
+                                                                                 <Insets top="8.0" />
+                                                                              </padding>
+
+                                                                           </Label>
+                                                                           <TextField fx:id="modifierFormateurNom" onKeyTyped="#modifyFormateurButtonActivation"  styleClass="tf_box" HBox.hgrow="ALWAYS">
                                                                               <font>
-                                                                                 <Font size="16.0" />
+                                                                                 <Font size="14.0" />
                                                                               </font>
                                                                               <HBox.margin>
-                                                                                 <Insets bottom="10.0" left="10.0" />
+                                                                                 <Insets bottom="10.0"  left="115.0" right="300.0"/>
                                                                               </HBox.margin>
                                                                            </TextField>
+
+                                                                        </children>
+                                                                     </HBox>
+
+
+                                                                     <HBox VBox.vgrow="ALWAYS">
+                                                                        <children>
+                                                                           <Label text="Prénom" textFill="#566573">
+                                                                              <font>
+                                                                                 <Font name="normal" size="18.0" />
+                                                                              </font>
+                                                                              <padding>
+                                                                                 <Insets top="8.0" />
+                                                                              </padding>
+
+                                                                           </Label>
+                                                                           <TextField fx:id="modifierFormateurPrenom" onKeyTyped="#modifyFormateurButtonActivation"  styleClass="tf_box" HBox.hgrow="ALWAYS">
+                                                                              <font>
+                                                                                 <Font size="14.0" />
+                                                                              </font>
+                                                                              <HBox.margin>
+                                                                                 <Insets bottom="10.0" left="91.0" right="300.0"/>
+                                                                              </HBox.margin>
+                                                                           </TextField>
+                                                                        </children>
+                                                                     </HBox>
+
+
+                                                                     <HBox>
+                                                                        <children>
+                                                                           <Label text="Email" textFill="#566573">
+                                                                              <font>
+                                                                                 <Font name="normal" size="18.0" />
+                                                                              </font>
+                                                                              <padding>
+                                                                                 <Insets top="8.0" />
+                                                                              </padding>
+
+                                                                           </Label>
+                                                                           <TextField fx:id="modifierFormateurEmail" onKeyTyped="#modifyFormateurButtonActivation"  styleClass="tf_box" HBox.hgrow="ALWAYS">
+                                                                              <font>
+                                                                                 <Font size="14.0" />
+                                                                              </font>
+                                                                              <HBox.margin>
+                                                                                 <Insets bottom="10.0" left="110.0" right="300.0"/>
+                                                                              </HBox.margin>
+                                                                           </TextField>
+
+                                                                        </children>
+                                                                     </HBox>
+
+                                                                     <HBox>
+                                                                        <children>
+                                                                           <Label text="N° Télèphone" textFill="#566573">
+                                                                              <font>
+                                                                                 <Font name="normal" size="18.0" />
+                                                                              </font>
+                                                                              <padding>
+                                                                                 <Insets top="8.0" />
+                                                                              </padding>
+
+                                                                           </Label>
+                                                                           <TextField fx:id="modifierFormateurTelephone" onKeyTyped="#modifyFormateurButtonActivation" styleClass="tf_box" HBox.hgrow="ALWAYS">
+                                                                              <font>
+                                                                                 <Font size="14.0" />
+                                                                              </font>
+                                                                              <HBox.margin>
+                                                                                 <Insets bottom="10.0" left="39.0" right="300.0"/>
+                                                                              </HBox.margin>
+                                                                           </TextField>
+                                                                        </children>
+                                                                     </HBox>
+
+
+                                                                     <HBox>
+
+                                                                        <children>
+                                                                           <Label text="Domaine" textFill="#566573">
+                                                                              <font>
+                                                                                 <Font name="normal" size="18.0" />
+                                                                              </font>
+                                                                              <padding>
+                                                                                 <Insets top="8.0" />
+                                                                              </padding>
+
+                                                                           </Label>
+                                                                           <ComboBox fx:id="modifierFormateurDomaineCombo" onAction="#modifyFormateurButtonActivationAction"  promptText="domaine">
+                                                                              <opaqueInsets>
+                                                                                 <Insets />
+                                                                              </opaqueInsets>
+                                                                              <HBox.margin>
+                                                                                 <Insets bottom="10.0" top="10.0" right="8.0" left="170"/>
+                                                                              </HBox.margin>
+                                                                              <padding>
+                                                                                 <Insets bottom="2.0" right="2.0" top="2.0" />
+
+                                                                              </padding>
+                                                                           </ComboBox>
                                                                         </children>
                                                                      </HBox>
                                                                      <HBox>
-                                                                        <children>
-                                                                           <TextField fx:id="modifierFormateurEmail" onKeyTyped="#modifyFormateurButtonActivation" promptText="Nouvel email d'instructeur" styleClass="tf_box" HBox.hgrow="ALWAYS">
-                                                                              <font>
-                                                                                 <Font size="16.0" />
-                                                                              </font>
-                                                                           </TextField>
-                                                                           <TextField fx:id="modifierFormateurTelephone" onKeyTyped="#modifyFormateurButtonActivation" promptText="Nouvel n°_téléphone d'instructeur" styleClass="tf_box" HBox.hgrow="ALWAYS">
-                                                                              <font>
-                                                                                 <Font size="16.0" />
-                                                                              </font>
+                                                                     <children>
+
+                                                                           <Button fx:id="modifyFormateurButton" disable="true" mnemonicParsing="false" onAction="#ModifierFormateur" prefHeight="40.0" prefWidth="117.0" styleClass="greenButtons" text="Enregistrer">
                                                                               <HBox.margin>
-                                                                                 <Insets bottom="10.0" left="10.0" />
+                                                                                 <Insets left="435.0" top="15.0" />
                                                                               </HBox.margin>
-                                                                           </TextField>
-                                                                        </children>
+                                                                              <cursor>
+                                                                                 <Cursor fx:constant="HAND" />
+                                                                              </cursor>
+                                                                           </Button>
+                                                                     </children>
                                                                      </HBox>
+
+
+
                                                                   </children>
                                                                </VBox>
-                                                               <Button fx:id="modifyFormateurButton" disable="true" mnemonicParsing="false" onAction="#ModifierFormateur" prefHeight="40.0" prefWidth="117.0" styleClass="greenButtons" text="Enregistrer">
-                                                                  <HBox.margin>
-                                                                     <Insets left="15.0" />
-                                                                  </HBox.margin>
-                                                                  <cursor>
-                                                                     <Cursor fx:constant="HAND" />
-                                                                  </cursor>
-                                                               </Button>
+
                                                             </children>
                                                             <padding>
                                                                <Insets right="10.0" />
                                                             </padding>
-                                                            <opaqueInsets>
-                                                               <Insets />
-                                                            </opaqueInsets>
-                                                            <VBox.margin>
-                                                               <Insets top="25.0" />
-                                                            </VBox.margin>
+
                                                          </HBox>
-                                                         <Line endX="790.2929077148438" startX="-93.0" stroke="#495bed" strokeLineCap="ROUND" strokeWidth="2.0" />
-                                                         <Label text="Supprimer un instructeur:" textFill="#ff4444">
-                                                            <font>
-                                                               <Font name="Comic Sans MS Bold" size="25.0" />
-                                                            </font>
-                                                            <VBox.margin>
-                                                               <Insets top="5.0" />
-                                                            </VBox.margin>
-                                                         </Label>
-                                                         <HBox alignment="CENTER" prefHeight="87.0" prefWidth="907.0">
-                                                            <children>
-                                                               <ComboBox fx:id="deleteFormateurIdCombo" onAction="#deleteFormateurButtonActivation" prefHeight="25.0" prefWidth="743.0" promptText="ID d'instructeur à supprimer">
-                                                                  <opaqueInsets>
-                                                                     <Insets />
-                                                                  </opaqueInsets>
-                                                                  <padding>
-                                                                     <Insets bottom="2.0" right="2.0" top="2.0" />
-                                                                  </padding>
-                                                               </ComboBox>
-                                                               <Button fx:id="deleteFormateurButton" disable="true" mnemonicParsing="false" onAction="#deleteFormateur" prefHeight="40.0" prefWidth="117.0" styleClass="dangerButtons" text="Supprimer">
-                                                                  <HBox.margin>
-                                                                     <Insets left="15.0" />
-                                                                  </HBox.margin>
-                                                                  <cursor>
-                                                                     <Cursor fx:constant="HAND" />
-                                                                  </cursor>
-                                                               </Button>
-                                                            </children>
-                                                            <VBox.margin>
-                                                               <Insets top="15.0" />
-                                                            </VBox.margin>
-                                                            <padding>
-                                                               <Insets right="11.0" />
-                                                            </padding>
-                                                         </HBox>
+
+
                                                       </children>
                                                       <HBox.margin>
                                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -1224,6 +1420,11 @@
                      </VBox>
                   </children>
                </Pane>
+
+
+
+
+
                <Pane fx:id="profilsPane" prefHeight="200.0" prefWidth="200.0" styleClass="paneStyle">
                   <children>
                      <VBox prefHeight="589.0" prefWidth="949.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #FFFFFF;">
