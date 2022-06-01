@@ -23,10 +23,10 @@ public class UtilisateurCrud {
 				return "Tous les champs sont obligatoires et doivent étre remplis correctement !";
 			}else {
 				if(!getUserByLog(cn,login)) {
-				pr = cn.prepareStatement("insert into Utilisateur (Login,Password,Role)values(?,?,?)");
+				pr = cn.prepareStatement("insert into utilisateur (Login,Password,Role)values(?,?,?)");
 				pr.setString(1, login.trim());
 				pr.setString(2, password.trim());
-				pr.setString(3, role==1?"Administrateur":"Utilisateur");
+				pr.setString(3, role==1?"Administrateur":"utilisateur");
 				pr.executeUpdate();
 				return "L'utilisateur a été ajouté avec succés.";
 			
@@ -45,7 +45,7 @@ public class UtilisateurCrud {
 	public String signIn(Connection cn,String login,String password) {
 		// créer un nouvelle utilisateur
 		try {
-			pr = cn.prepareStatement("select Role from Utilisateur where Login=? and Password=?");
+			pr = cn.prepareStatement("select Role from utilisateur where Login=? and Password=?");
 			pr.setString(1, login.trim());
 			pr.setString(2, password.trim());
 			ResultSet rs = pr.executeQuery();
@@ -70,7 +70,7 @@ public class UtilisateurCrud {
 			if(login.length()==0 || password.length()==0) {
 				return "Tous les champs sont obligatoires et doivent étre remplis correctement !";
 			}else {
-				pr = cn.prepareStatement("update Utilisateur set Login=?,Password=? where Code_utilisateur = ?");
+				pr = cn.prepareStatement("update utilisateur set Login=?,Password=? where Code_utilisateur = ?");
 				pr.setString(1, login.trim());
 				pr.setString(2, password.trim());
 				pr.setInt(3,id);
@@ -90,7 +90,7 @@ public class UtilisateurCrud {
 	public boolean getUserByLog(Connection cn,String login) {
 		//  verifier si l'utilisateur est deja existe 
 		try {
-			pr = cn.prepareStatement("select Login from Utilisateur where Login=? ");
+			pr = cn.prepareStatement("select Login from utilisateur where Login=? ");
 			pr.setString(1, login.trim());
 			ResultSet rs = pr.executeQuery();
 			

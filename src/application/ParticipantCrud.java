@@ -30,7 +30,7 @@ public class ParticipantCrud {
 			}else if(ParticipantCrud.getParticipantById(cn, Matricule_participant)) {
 				return "Cette matricule est deja existe!";
 			}else {
-				pr = cn.prepareStatement("insert into Participant (Matricule_participant,Nom,Prenom,Profil,Date_naissance) values (?,?,?,?,?)");
+				pr = cn.prepareStatement("insert into participant (Matricule_participant,Nom,Prenom,Profil,Date_naissance) values (?,?,?,?,?)");
 				pr.setInt(1, Matricule_participant);
 				pr.setString(2,Nom.trim());
 				pr.setString(3,Prenom.trim());
@@ -57,7 +57,7 @@ public String modifyEtudiant(Connection cn,int id,String Nom,String Prenom,int P
 			}else if(!ParticipantCrud.getParticipantById(cn, id)) {
 				return "Cette matricule n'existe pas!";
 			}else {
-				pr = cn.prepareStatement("update Participant set Nom=?,Prenom=?,Profil=?,Date_naissance=? where Matricule_participant = ?");
+				pr = cn.prepareStatement("update participant set Nom=?,Prenom=?,Profil=?,Date_naissance=? where Matricule_participant = ?");
 				pr.setString(1,Nom.trim());
 				pr.setString(2,Prenom.trim());
 				pr.setInt(3, Profil);
@@ -105,7 +105,7 @@ public String deleteEtudiant(Connection cn,int id) {
 	// supprimer Etudiant 
 	if(getParticipantById(cn, id)) {
 	try {
-		pr = cn.prepareStatement("delete from Participant where Matricule_participant = ?");
+		pr = cn.prepareStatement("delete from participant where Matricule_participant = ?");
 		pr.setInt(1, id);
 		pr.executeUpdate();
 		return "L'participant a été supprimé.";
@@ -128,7 +128,7 @@ public String deleteEtudiant(Connection cn,int id) {
 public  ArrayList<ParticipantModel> getAllEtudiant(Connection cn) {
 	ArrayList<ParticipantModel> resultArray = new ArrayList<ParticipantModel>();
 	try {
-		pr = cn.prepareStatement("select Matricule_participant,Nom,Prenom,Profil,Date_naissance from Participant order by Nom asc");
+		pr = cn.prepareStatement("select Matricule_participant,Nom,Prenom,Profil,Date_naissance from participant order by Nom asc");
 		ResultSet rs = pr.executeQuery();
 		while(rs.next()) {
 			String profil = ProfilCrud.getProfilLibelleById(cn, rs.getInt(4));

@@ -2,25 +2,18 @@ package application.dashboard;
 
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+
+import application.*;
 import javafx.fxml.FXMLLoader;
 
-import application.DataBase;
-import application.DomaineCrud;
-import application.FormateurCrud;
-import application.FormationCrud;
-import application.ParticipantCrud;
-import application.ProfilCrud;
-import application.UtilisateurCrud;
 import application.Models.DomaineModel;
 import application.Models.FormateurModel;
 import application.Models.FormationModel;
