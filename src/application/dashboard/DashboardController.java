@@ -397,7 +397,6 @@ public class DashboardController implements Initializable  {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
 		db = new DataBase();
 		cnx = db.connecterBase();
 		filePath=arg0;
@@ -570,7 +569,6 @@ public class DashboardController implements Initializable  {
 		
 		ObservableList<UserModel> userObservables = FXCollections.observableArrayList() ;
 		usersTable.setItems(userObservables);
-
 		for(int i=0;i<myUsers.size();i++) {
 			userObservables.add(myUsers.get(i));
 		}
