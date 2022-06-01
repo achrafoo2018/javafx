@@ -1,0 +1,73 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.parent{
+	-fx-background-color:transparent;
+}
+
+.exitBtn{
+	-fx-background-color:transparent !important;
+	-fx-text-fill: white !important;
+}
+
+.pane{
+	-fx-background-color:#051838;
+}
+
+.myvbox{
+	-fx-background-color:#051838;
+	-fx-background-radius: 30;
+    -fx-border-color: #DEDEE4;
+    -fx-border-width: 5px 5px 5px 5px;
+    -fx-border-radius: 30;
+}
+
+.errorsLabel{
+	-fx-background-color:#f93154;
+	-fx-border-color: #DEDEE4;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-font-weight:bold;
+}
+
+
+
+.button{
+	-fx-background-radius: 30;
+    -fx-background-insets: 0,1,2,3,0;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+	-fx-background-color: 
+        linear-gradient(#2096ff, #05ffa3),
+        linear-gradient(#ffef84, #f2ba44),
+        linear-gradient(#ffea6a, #efaa22),
+        linear-gradient(#45cafc 0%, #303f9f 100%),
+        linear-gradient( from 0% 0% to 15% 50%, rgba(255,255,255,1), rgba(255,255,255,0) );
+    
+    
+}
+
+
+.white-pane{
+	-fx-background-color:#ffffff;
+}
+
+
+.blue-panel{
+    -fx-background-color: #151928;
+    
+}
+.tf_box{
+    -fx-background-color: transparent;
+    -fx-border-color: #DEDEE4;
+    -fx-border-width: 0px 0px 1px 0px;
+    -fx-text-fill: white;
+}
+.tf{
+    -fx-background-color: transparent;    
+}
+.blue-btn{
+    -fx-background-color: #2196f3;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #ffffff;
+}
+
