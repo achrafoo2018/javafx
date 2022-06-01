@@ -833,10 +833,12 @@ public class DashboardController implements Initializable  {
 	}
 
 	@FXML
-	private void deleteProfil(ActionEvent event){
+	private void deleteProfil(ActionEvent event) {
+
 		profilMessageLabel.setVisible(true);
 		profilMessageLabel.setStyle("-fx-background-color:#f93154;");
-
+		String libelle = profilDeleteLogin.getText().trim().toLowerCase();
+		String result = null;
 		// collecter les donner saisit par l'utilisateur
 		String libelle=profilDeleteLogin.getText().trim().toLowerCase();
 
@@ -844,15 +846,13 @@ public class DashboardController implements Initializable  {
 		if(LogController.containsNumber(libelle)) {
 			profilMessageLabel.setText("Le Libelle n'accepte que des chaines de caractére!");
 		}else {
-
-
 			String result = profilCRUD.deleteProfil(DBconnection,libelle);
 			// verifier si l'utilisateur a été ajouté
 			if(result.contains("Le profil a été supprimé.")) {
 				profilMessageLabel.setText("Le profil a été supprimé.");
 				profilMessageLabel.setStyle("-fx-background-color:#33b5e5;");
 				loadAll();
-			}else {
+			} else {
 				profilMessageLabel.setText(result);
 
 			}
@@ -1009,7 +1009,7 @@ public class DashboardController implements Initializable  {
 	private void deleteDomaine(ActionEvent event){
 		domaineMessageLabel.setVisible(true);
 		domaineMessageLabel.setStyle("-fx-background-color:#f93154;");
-
+		String result=null;
 		// collecter les donner saisit par l'utilisateur
 		String libelle=domaineDeleteLogin.getText().trim().toLowerCase();
 
@@ -1017,10 +1017,12 @@ public class DashboardController implements Initializable  {
 		if(LogController.containsNumber(libelle)) {
 			domaineMessageLabel.setText("Le Libelle n'accepte que des chaines de caractére!");
 		}else {
-
-
-			String result = domaineCRUD.deleteDomaine(DBconnection,libelle);
-			// verifier si le domaine a été ajouté
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+			alert.setTitle("Suppression D'un Domaine");
+			alert.setHeaderText("Êtes-Vous Sure de Supprimer Ce Domaine ?");
+			if (alert.showAndWait().get() == ButtonType.OK) {
+				result = domaine.deleteDomaine(cnx,libelle);
+			}
 			if(result.contains("Le domaine a été supprimé.")) {
 				domaineMessageLabel.setText("Le domaine a été supprimé.");
 				domaineMessageLabel.setStyle("-fx-background-color:#33b5e5;");
@@ -1243,7 +1245,7 @@ public class DashboardController implements Initializable  {
 		String result=null;
 		int id;
 		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-		alert.setTitle("Supprimer");
+		alert.setTitle("Suppression D'un Formateur");
 		alert.setHeaderText("Êtes-vous sûr de supprimer ce formateur ?");
 		if (alert.showAndWait().get() == ButtonType.OK){
 			formateurMessageLabel.setVisible(true);
