@@ -595,7 +595,8 @@ public class DashboardController implements Initializable  {
 
 		String login=newLogin.getText().trim();
 		String password=newPassword.getText().trim();
-		String name=newName.getText().trim();
+		// String name=newName.getText().trim();
+		String name= "DEFAULT_USER";
 
 
 		if(LoginController.containsNumber(login)) {

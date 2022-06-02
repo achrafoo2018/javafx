@@ -22,7 +22,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="980.0" styleClass="parent" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.log.LoginController">
+<AnchorPane id="AnchorPane" prefHeight="480.0" prefWidth="980.0" styleClass="parent" stylesheets="@../application.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.log.LoginController">
    <children>
       <Pane prefHeight="480.0" prefWidth="980.0" style="-fx-background-color: white;" styleClass="pane">
          <children>
@@ -245,10 +245,6 @@
                   </HBox>
                </children>
             </VBox>
-            <Button layoutX="941.0" layoutY="-6.0" mnemonicParsing="false" onAction="#exit" prefHeight="17.0" prefWidth="32.0" styleClass="exitBtn" text="X">
-               <font>
-                  <Font name="Segoe Print" size="12.0" />
-               </font></Button>
             <Button fx:id="signInButton" disable="true" layoutX="82.0" layoutY="321.0" mnemonicParsing="false" onAction="#signIn" prefHeight="40.0" prefWidth="350.0" styleClass="create-account-btn" text="S'authentifier" />
             <Label layoutX="147.0" layoutY="378.0" text="Vous n'avez pas un compte ?" textAlignment="CENTER">
                <font>
@@ -265,6 +261,17 @@
                   <Font name="SansSerif Regular" size="30.0" />
                </font>
             </Label>
+            <Button layoutX="946.0" layoutY="-12.0" mnemonicParsing="false" onAction="#exit" prefHeight="40.0" prefWidth="44.0" styleClass="exitbtn" stylesheets="@../application.css" text="X" textFill="WHITE">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </Button>
          </children>
       </Pane>
       <VBox fx:id="vbox" alignment="CENTER" layoutX="22.0" prefHeight="480.0" prefWidth="480.0" style="-fx-background-color: #090e27;" styleClass="myvbox">
