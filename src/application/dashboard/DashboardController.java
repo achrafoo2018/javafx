@@ -592,12 +592,12 @@ public class DashboardController implements Initializable  {
 		userCreationLabel.setVisible(true);
 		userCreationLabel.setStyle("-fx-background-color:#f93154;");
 
-		// collecter les donner saisit par l'utilisateur
+
 		String login=newLogin.getText().trim();
 		String password=newPassword.getText().trim();
 		String name=newName.getText().trim();
 
-		// verifier les donner saisit par l'utilisateur
+
 		if(LoginController.containsNumber(login)) {
 			userCreationLabel.setText("Login n'accepte que des chaines de caractére!");
 		}else if(userCRUD.getUserByLog(DBconnection, login)){
@@ -613,12 +613,8 @@ public class DashboardController implements Initializable  {
 				loadAll();
 			}else {
 				userCreationLabel.setText(result);
-
 			}
-
-
 		}
-
 	}
 
 	@FXML
@@ -846,8 +842,8 @@ public class DashboardController implements Initializable  {
 			result = profilCRUD.deleteProfil(DBconnection,libelle);
 			// verifier si l'utilisateur a été ajouté
 			if(result.contains("Le profil a été supprimé.")) {
-				profilMessageLabel.setText("Le profil a été supprimé.");
-				profilMessageLabel.setStyle("-fx-background-color:#33b5e5;");
+				profilMessageLabel.setText("Le profil a été supprimé avec succés");
+				profilMessageLabel.setStyle("-fx-background-color:#52BE80;");
 				loadAll();
 			} else {
 				profilMessageLabel.setText(result);
@@ -1763,32 +1759,32 @@ public class DashboardController implements Initializable  {
 
 	}
 
-
-
-
-
-
 	//delete Participant
 	@FXML
 	private void deleteParticipant(ActionEvent event){
-		participantMessageLabel.setVisible(true);
-		participantMessageLabel.setStyle("-fx-background-color:#f93154;");
+		String result=null;
+		int id;
+		Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+		alert.setTitle("Suppression D'un Participant");
+		alert.setHeaderText("Êtes-vous sûr de supprimer ce participant ?");
 
-		// collecter les donner saisit par l'utilisateur
-		int id=Integer.parseInt(deleteParticipantIdCombo.getValue());
 
-		String result = participantCRUD.deleteEtudiant(DBconnection,id);
-		// verifier si l'etudiant a été ajouté
+		if (alert.showAndWait().get() == ButtonType.OK){
+			participantMessageLabel.setVisible(true);
+			participantMessageLabel.setStyle("-fx-background-color:#f93154;");
+			id=Integer.parseInt(deleteParticipantIdCombo.getValue());
+
+			result = participantCRUD.deleteEtudiant(DBconnection,id);
+		}
+
+
 		if(result.contains("L'participant a été supprimé.")) {
-			participantMessageLabel.setText("L'participant a été supprimé.");
+			participantMessageLabel.setText("Participant a été supprimé avec succés!");
 			participantMessageLabel.setStyle("-fx-background-color:#33b5e5;");
 			loadAll();
 		}else {
 			participantMessageLabel.setText(result);
 		}
-
-
-
 	}
 
 

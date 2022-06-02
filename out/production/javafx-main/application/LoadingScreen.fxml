@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -8,41 +8,65 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane style="-fx-pref-width: 900; -fx-pref-height: 500;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane style="-fx-pref-width: 900; -fx-pref-height: 500;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane prefHeight="275.0" prefWidth="282.0" style="-fx-pref-width: 900; -fx-pref-height: 500; -fx-background-color: #37474F;">
+      <Pane prefHeight="275.0" prefWidth="282.0" style="-fx-pref-width: 900; -fx-pref-height: 500; -fx-background-color: #78909C;">
          <children>
             <ImageView fitHeight="500.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../Desktop/miniproj%20bd/Assets/gradient.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="300" layoutY="346.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestion De Formation">
+            <Text fill="#2658cd" layoutX="297.0" layoutY="326.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestion De Formation">
                <font>
-                  <Font name="Segoe Print Bold" size="28" />
+                  <Font name="SansSerif Bold" size="28.0" />
                </font>
             </Text>
-            <ImageView fitHeight="280" fitWidth="280" layoutX="300" layoutY="40" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="280" fitWidth="280" layoutX="300.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../Assets/logo.png" />
                </image>
             </ImageView>
-            <ProgressBar id="LoadingBar" layoutX="-1.0" layoutY="486.0" prefWidth="200.0" progress="0.0" style="-fx-pref-width: 902; -fx-pref-height: 15;" />
-            <Text id="LoadingLabel" fill="WHITE" layoutX="14.0" layoutY="469.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loading ...">
-               <font>
-                  <Font name="Segoe UI Bold" size="14.0" />
-               </font>
-            </Text>
-            <Text id="LoadingPercent" fill="WHITE" layoutX="835.0" layoutY="468.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0 %" textAlignment="RIGHT" wrappingWidth="50.0556640625">
-               <font>
-                  <Font name="Segoe UI Bold" size="14.0" />
-               </font>
-            </Text>
-            <ImageView fitHeight="105.0" fitWidth="90.0" layoutX="790.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="75.0" fitWidth="137.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../Assets/company.png" />
+                  <Image url="@../Assets/isi.png" />
                </image>
             </ImageView>
+            <Text fill="WHITE" layoutX="378.0" layoutY="372.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Created By :">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="333.0" layoutY="403.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mohamed Amine Ben Ammar">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="387.0" layoutY="459.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Zeineb Zayet">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" layoutX="372.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Achraf Ben Soltane">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text fx:id="LoadingLabel" fill="WHITE" layoutX="14.0" layoutY="481.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loading ..." wrappingWidth="436.046875">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <Pane layoutX="824.0" layoutY="14.0" prefHeight="58.0" prefWidth="62.0" style="-fx-background-color: #fff; -fx-background-radius: 50%;">
+               <children>
+                  <Group layoutX="9.0" layoutY="7.0" />
+                  <ImageView fitHeight="64.0" fitWidth="68.0" layoutX="1.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Assets/gdf_logo.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
          </children>
       </Pane>
    </children>
