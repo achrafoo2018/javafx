@@ -111,8 +111,6 @@ public class DashboardController implements Initializable  {
 	@FXML
 	private Label userCreationLabel;
 	@FXML
-	private Label windowTitle;
-	@FXML
 	private TextField newLogin;
 	@FXML
 	private TextField newName;
@@ -467,7 +465,6 @@ public class DashboardController implements Initializable  {
 		// update menu on role
 		if(LoginController.role =="user") {
 			menu.getChildren().remove(UsersButtonHolder);
-			windowTitle.setText("Profils");
 			profilsPane.toFront();
 		}
 	}
@@ -531,27 +528,21 @@ public class DashboardController implements Initializable  {
 	private void changeWindow(ActionEvent event){
 		// menu action holder
 		if(event.getSource() == goToUtilisateurs ) {
-			windowTitle.setText("Utilisateurs");
 			userPane.toFront();
 		}
 		else if(event.getSource() == goToProfils ) {
-			windowTitle.setText("Profils");
 			profilsPane.toFront();
 		}
 		else if(event.getSource() == goToDomaines ) {
-			windowTitle.setText("Domaines");
 			domainesPane.toFront();
 		}
 		else if(event.getSource() == goToFormations ) {
-			windowTitle.setText("Formations");
 			formationPane.toFront();
 		}
 		else if(event.getSource() == goToInstructeurs ) {
-			windowTitle.setText("Formateurs");
 			formateurPane.toFront();
 		}
 		else if(event.getSource() == goToParticipant ){
-			windowTitle.setText("Participants");
 			participantPane.toFront();
 		}
 	}
