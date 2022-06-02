@@ -322,16 +322,7 @@
             </padding>
          </Button>
 
-         <HBox layoutX="528.0" layoutY="-24.0">
-            <children>
-               <Label fx:id="windowTitle" textFill="WHITE">
-                  <font>
-                     <Font name="Segoe Print Bold" />
-                  </font>
-               </Label>
-            </children>
 
-         </HBox>
 
 
 
