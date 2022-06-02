@@ -133,7 +133,7 @@
                         </Label>
                      </children>
                   </Group>
-                  <Label fx:id="loginError" prefHeight="49.0" prefWidth="313.0" style="-fx-text-alignment: center;" styleClass="errorsLabel" text="Login et Password n’acceptent que des chaines de caractère!" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true" VBox.vgrow="ALWAYS">
+                  <Label fx:id="loginError" prefHeight="49.0" prefWidth="313.0" style="-fx-text-alignment: center;" styleClass="errorsLabel" text="Login que des chaines de caractère!" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                      </VBox.margin>
@@ -210,7 +210,7 @@
                         </Group>
                      </children>
                   </HBox>
-                  <Label fx:id="loginError2" prefHeight="49.0" prefWidth="332.0" style="-fx-text-alignment: center;" styleClass="errorsLabel" text="Login et Password n’acceptent que des chaines de caractère!" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
+                  <Label fx:id="loginError2" prefHeight="49.0" prefWidth="332.0" style="-fx-text-alignment: center;" styleClass="errorsLabel" text="Login que des chaines de caractère!" textAlignment="CENTER" textFill="WHITE" visible="false" wrapText="true">
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
